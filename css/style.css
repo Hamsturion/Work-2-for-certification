@@ -66,6 +66,10 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
+nav #dropdown a:hover {
+  text-decoration: dashed underline 2px;
+}
+
 .menu-icon {
   align-self: stretch;
   display: none;

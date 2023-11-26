@@ -75,11 +75,6 @@
     max-height: 0 !important;
   }
 
-  li:hover {
-    box-sizing: border-box;
-    cursor: pointer;
-  }
-
   nav #dropdown a {
     display: flex;
     flex-grow: 1;

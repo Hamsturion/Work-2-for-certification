@@ -1,0 +1,76 @@
+nav #dropdown .btnarrow path {
+    stroke: var(--menu-arrow);
+    stroke-width: 0.08rem;
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  nav #dropdown .downarrow path {
+    d: path("M 1 3 L 5 7 L 9 3");
+    animation-fill-mode: both;
+    animation: animatearrow 0.3s linear, animatearrowcolor 0.5s ease-out;
+  }
+
+  nav #dropdown .uparrow path {
+    d: path("M 1 7 L 5 3 L 9 7");
+    animation-fill-mode: both;
+    animation: animatearrowup 0.3s linear, animatearrowcolorup 0.5s ease-out;
+  }
+
+  @keyframes animatearrowcolor {
+    100% {
+      stroke: var(--menu-arrow);
+    }
+    50% {
+      stroke: var(--menu-text);
+    }
+    0% {
+      stroke: var(--menu-arrow);
+    }
+  }
+
+  @keyframes animatearrowcolorup {
+    0% {
+      stroke: var(--menu-arrow);
+    }
+    50% {
+      stroke: var(--menu-text);
+    }
+    100% {
+      stroke: var(--menu-arrow);
+    }
+  }
+
+  @keyframes animatearrow {
+    100% {
+      d: path("M 2 5 L 5 6 L 8 5");
+    }
+    50% {
+      d: path("M 1 3 L 5 3 L 9 3");
+    }
+    0% {
+      d: path("M 2 5 L 5 4 L 8 5");
+    }
+  }
+
+  @keyframes animatearrowup {
+    0% {
+      d: path("M 2 5 L 5 6 L 8 5");
+    }
+    50% {
+      d: path("M 1 7 L 5 7 L 9 7");
+    }
+    100% {
+      d: path("M 1 7 L 5 3 L 9 7");
+    }
+  }
+
+  nav #dropdown .btnarrow:hover {
+    filter: blur(0.04rem);
+  }
+
+  nav #dropdown .btnarrow svg {
+    pointer-events: none;
+    height: calc(var(--menu-element-height) - 15px);
+    width: calc(var(--menu-element-height) - 15px);
+  }

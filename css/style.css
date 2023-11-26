@@ -1,0 +1,83 @@
+:root {
+  --menu-text: #fff;
+  --menu-arrow: #1da5e4;
+  --menu-bg: #15304c;
+  --menu-down-bg: #122942;
+  --menu-down-bg-colapsed: #0f263d;
+  --body-bg: steelblue;
+  --menu-element-height: 30px;
+  --logo-heigth: 70px;
+}
+
+@font-face {
+  font-family: harryp;
+  src: url("/fonts/harryp.ttf");
+  font-weight: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--body-bg);
+  font-size: 14px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--menu-bg);
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  z-index: 1;
+  background-color: var(--menu-bg);
+  height: var(--logo-heigth);
+}
+
+.logo h1 {
+  display: block;
+  width: 200px;
+  font-family: harryp;
+  color: #fff;
+  font-size: 3.5rem;
+  font-weight: normal;
+  margin-left: 20px;
+  margin-right: 20px;
+  -webkit-text-stroke: 0.03rem #fff;
+  background: linear-gradient(
+    132deg,
+    rgba(5, 0, 82, 0.714) 0%,
+    rgba(81, 9, 121, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.menu-icon {
+  align-self: stretch;
+  display: none;
+  flex-basis: 70px;
+  z-index: 1;
+  background-color: var(--menu-bg);
+}
+
+.welcome {
+  background: url("/img/background.jpg");
+  min-height: calc(100vh - 70px);
+  display: block;
+  background-size: cover;
+  background-position: center;
+}

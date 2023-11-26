@@ -1,0 +1,7 @@
+@media (max-width: 500px) {
+  nav {
+    position: absolute;
+    height: 70px;
+    width: 100%;
+  }
+}

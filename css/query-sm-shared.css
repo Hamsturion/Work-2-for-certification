@@ -1,0 +1,108 @@
+@media (max-width: 900px) {
+  nav #dropdown {
+    z-index: -1;
+    transition: 0.5s ease-out;
+    transform: translateY(calc(-100% + 68px));
+    background-color: var(--menu-down-bg);
+  }
+
+  nav #dropdown li {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #1c446e;
+    border-bottom: 1px solid #091625;
+  }
+
+  nav #dropdown li:last-child {
+    border-bottom: none;
+  }
+
+  nav #dropdown ul {
+    flex-basis: 100%;
+    list-style-type: none;
+  }
+
+  nav #dropdown ul:last-child {
+  }
+
+  nav #dropdown ul:first-child {
+    border-bottom: none;
+  }
+
+  nav #dropdown ul > li {
+  }
+
+  nav .togglelist ul {
+    background-color: #203f5e;
+  }
+
+  nav .togglelist li > ul {
+    background-color: #32577c;
+  }
+
+  nav .togglelist li > ul > li > ul {
+    background-color: #4a739c;
+  }
+
+  nav .togglelist li > ul > li > ul > li > ul {
+    background-color: #6793be;
+  }
+
+  nav .togglelist li > ul > li > ul > li > ul > li > ul {
+    background-color: #81aedb;
+  }
+
+  nav .togglelist li > ul > li > ul > li > ul > li > ul > li > ul {
+    background-color: #9fc9f3;
+  }
+
+  nav #dropdown .btnarrow {
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px;
+    width: calc(var(--menu-element-height) - 2px);
+    border-left: #1c446e 1px solid;
+  }
+
+  nav #dropdown .colapse {
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+  }
+
+  nav #dropdown .hiden {
+    max-height: 0 !important;
+  }
+
+  li:hover {
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  nav #dropdown a {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    height: calc(var(--menu-element-height) - 2px);
+    color: var(--menu-text);
+    width: calc(100% - var(--menu-element-height));
+    padding-left: 35%;
+    text-decoration: none;
+  }
+
+  nav .off#dropdown {
+    transition: 0.5s ease-out;
+    padding-top: 70px;
+    transform: translateY(0);
+    z-index: -1;
+  }
+
+  .menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    background-color: var(--menu-bg);
+  }
+}

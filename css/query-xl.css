@@ -1,0 +1,109 @@
+@media (min-width: 901px) {
+  nav {
+    display: flex;
+    width: 600px;
+    justify-content: right;
+    align-items: center;
+  }
+
+  nav #dropdown {
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    padding-right: 10px;
+    flex-grow: 2;
+    gap: 10px;
+    z-index: 2;
+  }
+
+  nav #dropdown > li {
+    position: relative;
+    display: flex;
+    color: var(--menu-text);
+    z-index: 2;
+  }
+
+  nav #dropdown > li > ul {
+    position: absolute;
+    top: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: none !important;
+  }
+
+  nav #dropdown > li > ul.hiden {
+    border-bottom: none !important;
+    border-top: none !important;
+  }
+
+  nav #dropdown ul > li {
+    width: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #1c446e;
+    border-bottom: 1px solid #091625;
+  }
+
+  nav .togglelist ul {
+    background-color: var(--menu-bg);
+  }
+
+  nav .togglelist li > ul {
+    background-color: #32577c;
+  }
+
+  nav .togglelist li > ul > li > ul {
+    background-color: #4a739c;
+  }
+
+  nav .togglelist li > ul > li > ul > li > ul {
+    background-color: #6793be;
+  }
+
+  nav .togglelist li > ul > li > ul > li > ul > li > ul {
+    background-color: #81aedb;
+  }
+
+  nav .togglelist li > ul > li > ul > li > ul > li > ul > li > ul {
+    background-color: #9fc9f3;
+  }
+
+  nav #dropdown .btnarrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav #dropdown > li ul .btnarrow {
+    padding: 0px 5px 0px 0px;
+  }
+
+  nav #dropdown .colapse {
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+  }
+
+  nav #dropdown .hiden {
+    max-height: 0 !important;
+  }
+
+  nav #dropdown .unhide {
+  }
+
+  li:hover {
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  nav #dropdown a {
+    display: flex;
+    height: calc(var(--menu-element-height) - 2px);
+    color: var(--menu-text);
+    flex-grow: 1;
+    color: var(--menu-text);
+    padding: 10px 5px 10px 10px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    align-items: center;
+  }
+}

@@ -1,0 +1,32 @@
+.menu-icon svg {
+  cursor: pointer;
+  border: 2px solid;
+  border-radius: 4px;
+  color: var(--menu-text);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 1.5;
+}
+
+.menu-icon svg path {
+  fill: none;
+  stroke: var(--menu-text);
+  stroke-width: 0.05rem;
+}
+
+.menu-icon .top,
+.menu-icon .bot,
+.menu-icon .mid {
+  stroke-dasharray: 4, 22;
+  transition: 0.6s ease-in-out, opacity 0s 250ms;
+}
+
+.menu-icon svg.active .top,
+.menu-icon svg.active .bot {
+  stroke-dasharray: 5.65, 15.7;
+  stroke-dashoffset: -15.7;
+}
+
+.menu-icon svg.active .mid {
+  opacity: 0;
+}

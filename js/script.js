@@ -1,6 +1,67 @@
-//zadavani nejake +/- globalni promene
 /////////////////////////////////////////////////////////////////////////////////
-//odeber z scc var vysky jednotlive polozky menu
+//generace nahodnych polozek do menu
+// let countMainFromUser = prompt("Kolik prejete polozek MAIN?");
+// let countDeepLevelsFromUser = prompt("Jakou prejete hloubku levelu?");
+const element_Dropdown_menuX = document.getElementById("dropdown");
+
+//pocet MAIN
+
+//Generace vlozenych menu
+const Level = function genLevel() {
+  let newFrag = document.createDocumentFragment();
+  const ul = document.createElement("ul");
+
+  let c1 = Math.ceil(Math.random() * 2);
+  for (let i = 0; i <= c1; i++) {
+    let c2 = Math.ceil(Math.random() * 3);
+
+    if (c2 == 1) {
+      const a = document.createElement("a");
+      const li = document.createElement("li");
+      li.appendChild(a);
+      newFrag.appendChild(li);
+      newFrag.appendChild(Level());
+    } else if (c2 == 2) {
+      const a = document.createElement("a");
+      const li = document.createElement("li");
+      li.appendChild(a);
+      newFrag.appendChild(li);
+    } else if (c2 == 3) {
+      null;
+    }
+  }
+
+  ul.appendChild(newFrag);
+  const a = document.createElement("a");
+  const li = document.createElement("li");
+  li.appendChild(a);
+  li.appendChild(ul);
+  newFrag.appendChild(li);
+  return newFrag;
+};
+
+function genMain() {
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+  li.appendChild(a);
+  element_Dropdown_menuX.appendChild(li);
+}
+
+//Vytvoreni nahodnych MAIN a vlozenych Menu
+let countMainFromUser = Math.ceil(Math.random() * 5 + 5);
+for (let i = 1; i <= countMainFromUser; i++) {
+  let c = Math.ceil(Math.random() * 2);
+  if (c == 1) {
+    genMain();
+  } else if (c == 2) {
+    element_Dropdown_menuX.appendChild(Level());
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+const element_Dropdown_menu = document.getElementById("dropdown");
+/////////////////////////////////////////////////////////////////////////////////
+//odeber z css var vysky jednotlive polozky menu
 const factHeightSorce = getComputedStyle(document.documentElement)
   .getPropertyValue("--menu-element-height")
   .replace("px", "");
@@ -10,14 +71,11 @@ const factHeight = parseInt(factHeightSorce);
 const ns = "http://www.w3.org/2000/svg";
 const element_Svg_Of_Hamburger = document.querySelector("svg");
 /////////////////////////////////////////////////////////////////////////////////
-const element_Dropdown_menu = document.getElementById("dropdown");
+
 const all_Elements_Ul_From_element_Dropdown_menu = document
   .getElementById("dropdown")
   .querySelectorAll("ul");
 
-const all_Elements_A_From_element_Dropdown_menu = document
-  .getElementById("dropdown")
-  .querySelectorAll("a");
 /////////////////////////////////////////////////////////////////////////////////
 //klasovani pro animace hamburgr menu
 document.querySelector(".menu-icon").addEventListener("click", menuAnimace);
@@ -46,7 +104,7 @@ function addColapse() {
       all_Elements_Ul_From_element_Dropdown_menu[i].querySelectorAll("li")
         .length >= 1
     ) {
-      console.log(all_Elements_Ul_From_element_Dropdown_menu[i]);
+      // console.log(all_Elements_Ul_From_element_Dropdown_menu[i]);
       // all_Elements_Ul_From_element_Dropdown_menu[i].setAttribute("id", i); //for me, control n consol
       all_Elements_Ul_From_element_Dropdown_menu[i].classList.add("colapse");
       all_Elements_Ul_From_element_Dropdown_menu[i].classList.add("hiden");
@@ -58,21 +116,29 @@ addColapse();
 
 /////////////////////////////////////////////////////////////////////////////////
 //pridavani span do vnitr tagu a
+const all_Elements_A_From_element_Dropdown_menu = document
+  .getElementById("dropdown")
+  .querySelectorAll("a");
+
 all_Elements_A_From_element_Dropdown_menu.forEach((existA) => {
   const newspan = document.createElement("span");
   existA.appendChild(newspan);
 });
 
 /////////////////////////////////////////////////////////////////////////////////
+//tady zacina hra s dodavanim nazv pro jednotlive MAIN
+const firstLevelAInLiElement = element_Dropdown_menu.querySelectorAll(
+  ":scope >  li  > a > span"
+);
 
-y = 0;
+let x = 1;
+firstLevelAInLiElement.forEach((addMAINToA) => {
+  addMAINToA.textContent = "MAIN " + x++;
+});
+
+// Jestli u vnitr v MAIN neco je:
+
 all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
-  x = 1;
-  y++;
-
-  const firstLevelAInLiElement = element_Dropdown_menu.querySelectorAll(
-    ":scope >  li  > a > span"
-  );
   //pridavani klasu
   if (allUlfromMenu.hasChildNodes()) {
     const newspan = document.createElement("span");
@@ -86,20 +152,17 @@ all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
     allUlfromMenu.parentNode.classList.add("togglelist");
     allUlfromMenu.parentNode.insertBefore(newspan, allUlfromMenu);
   }
-  //tady zacina hra s dodavanim nazv pro jednotlive menu
-  firstLevelAInLiElement.forEach((addMAINToA) => {
-    addMAINToA.textContent = "MAIN " + x++;
-  });
 
   const allChildLiWithAFromMenu = allUlfromMenu.querySelectorAll(
     ":scope >  li > a > span"
   );
 
-  z = 1;
-
+  let z = 1;
+  let y = 1;
   allChildLiWithAFromMenu.forEach((addMenuToA) => {
     addMenuToA.textContent = "Menu " + y + " - " + z++;
   });
+  y++;
 });
 
 /////////////////////////////////////////////////////////////////////////////////

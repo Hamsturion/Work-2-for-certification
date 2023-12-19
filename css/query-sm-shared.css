@@ -1,4 +1,4 @@
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   nav #dropdown {
     z-index: -1;
     transition: 0.5s ease-out;
@@ -73,6 +73,11 @@
 
   nav #dropdown .hiden {
     max-height: 0 !important;
+  }
+
+  li:hover {
+    box-sizing: border-box;
+    cursor: pointer;
   }
 
   nav #dropdown a {

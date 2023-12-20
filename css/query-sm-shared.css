@@ -3,56 +3,45 @@
     z-index: -1;
     transition: 0.5s ease-out;
     transform: translateY(calc(-100% + 68px));
+    border-left: var(--menu-text) 2px solid;
+    border-right: var(--menu-text) 2px solid;
+    border-bottom: var(--menu-text) 2px solid;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     background-color: var(--menu-down-bg);
+  }
+
+  nav #dropdown ul {
+    flex-basis: 100%;
   }
 
   nav #dropdown li {
     display: flex;
     flex-wrap: wrap;
-    border-top: 1px solid #1c446e;
-    border-bottom: 1px solid #091625;
+    border-radius: 10px;
   }
 
-  nav #dropdown ul {
-    flex-basis: 100%;
-    list-style-type: none;
+  nav #dropdown li > a:hover,
+  nav #dropdown li > span:hover {
+    border-radius: 10px;
   }
-
-  nav #dropdown ul > li {
-  }
-
-  nav .togglelist ul {
-    background-color: #203f5e;
-  }
-
-  nav .togglelist li > ul {
-    background-color: #32577c;
-  }
-
-  nav .togglelist li > ul > li > ul {
-    background-color: #4a739c;
-  }
-
-  nav .togglelist li > ul > li > ul > li > ul {
-    background-color: #6793be;
-  }
-
-  nav .togglelist li > ul > li > ul > li > ul > li > ul {
-    background-color: #81aedb;
-  }
-
-  nav .togglelist li > ul > li > ul > li > ul > li > ul > li > ul {
-    background-color: #9fc9f3;
+  nav #dropdown:last-child li:last-child {
+    /* box-sizing: border-box; */
+    /* cursor: pointer; */
   }
 
   nav #dropdown .btnarrow {
-    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-left: 0px;
     width: calc(var(--menu-element-height) - 2px);
     border-left: #1c446e 1px solid;
+  }
+
+  nav #dropdown > li {
+    border-top: 1px solid #1c446e;
+    border-bottom: 1px solid #091625;
   }
 
   nav #dropdown .colapse {
@@ -62,11 +51,6 @@
 
   nav #dropdown .hiden {
     max-height: 0 !important;
-  }
-
-  li:hover {
-    box-sizing: border-box;
-    cursor: pointer;
   }
 
   nav #dropdown a {
@@ -80,19 +64,10 @@
     text-decoration: none;
   }
 
-  nav #dropdown {
-    border-left: var(--menu-text) 2px solid;
-    border-right: var(--menu-text) 2px solid;
-    border-bottom: var(--menu-text) 2px solid;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
-
   nav .off#dropdown {
     transition: 0.5s ease-out;
     padding-top: 70px;
     transform: translateY(0);
-    z-index: -1;
   }
 
   .menu-icon {

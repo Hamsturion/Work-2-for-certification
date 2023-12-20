@@ -3,6 +3,7 @@
   --menu-arrow: #1da5e4;
   --menu-bg: #15304c;
   --menu-down-bg: #122942;
+  --menu-down-bg-hover: #1b3d63;
   --menu-down-bg-colapsed: #0f263d;
   --body-bg: steelblue;
   --menu-element-height: 30px;
@@ -67,8 +68,50 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
-nav #dropdown a:hover {
-  text-decoration: dashed underline 2px;
+nav #dropdown li > a:hover,
+nav #dropdown li > span:hover {
+  background-color: var(--menu-down-bg-hover);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-decoration: dashed underline 1px;
+}
+
+nav .togglelist li {
+  border-top: 1px solid #1c446e;
+  border-bottom: 1px solid #091625;
+  background-color: #003f5e;
+}
+
+nav .togglelist li li {
+  background-color: #103f5e;
+}
+
+nav .togglelist li li li {
+  background-color: #203f5e;
+}
+
+nav .togglelist li li li li {
+  background-color: #403f5e;
+}
+
+nav .togglelist li li li li li {
+  background-color: #503f5e;
+}
+
+nav .togglelist li li li li li li {
+  background-color: #603f5e;
+}
+
+nav .togglelist li li li li li li li {
+  background-color: #703f5e;
+}
+
+nav .togglelist li li li li li li li li {
+  background-color: #803f5e;
+}
+
+nav .togglelist li li li li li li li li {
+  background-color: #903f5e;
 }
 
 nav #dropdown li:last-child {

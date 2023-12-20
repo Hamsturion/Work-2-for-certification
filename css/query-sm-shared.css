@@ -80,6 +80,14 @@
     text-decoration: none;
   }
 
+  nav #dropdown {
+    border-left: var(--menu-text) 2px solid;
+    border-right: var(--menu-text) 2px solid;
+    border-bottom: var(--menu-text) 2px solid;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
   nav .off#dropdown {
     transition: 0.5s ease-out;
     padding-top: 70px;

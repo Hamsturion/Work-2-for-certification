@@ -35,7 +35,7 @@ header {
   height: 100%;
   position: relative;
   z-index: 1;
-  border-bottom: var(--menu-text) 1px solid;
+  border-bottom: var(--menu-text) 2px solid;
 }
 
 .logo {

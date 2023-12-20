@@ -48,7 +48,7 @@ function genMain() {
 }
 
 //Vytvoreni nahodnych MAIN a vlozenych Menu
-let countMainFromUser = Math.ceil(Math.random() * 5 + 5);
+let countMainFromUser = Math.ceil(Math.random() * 5 + 4);
 for (let i = 1; i <= countMainFromUser; i++) {
   let c = Math.ceil(Math.random() * 2);
   if (c == 1) {

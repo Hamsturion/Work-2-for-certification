@@ -1,4 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////////
+//rucni zadani polozek do menu
+const formular = document.querySelector("form");
+formular.addEventListener("submit", () => {
+  console.log(100);
+});
 //generace nahodnych polozek do menu
 // let countMainFromUser = prompt("Kolik prejete polozek MAIN?");
 // let countDeepLevelsFromUser = prompt("Jakou prejete hloubku levelu?");

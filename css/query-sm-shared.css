@@ -13,20 +13,9 @@
     border-bottom: 1px solid #091625;
   }
 
-  nav #dropdown li:last-child {
-    border-bottom: none;
-  }
-
   nav #dropdown ul {
     flex-basis: 100%;
     list-style-type: none;
-  }
-
-  nav #dropdown ul:last-child {
-  }
-
-  nav #dropdown ul:first-child {
-    border-bottom: none;
   }
 
   nav #dropdown ul > li {

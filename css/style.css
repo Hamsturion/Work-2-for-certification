@@ -6,7 +6,7 @@
   --menu-down-bg-colapsed: #0f263d;
   --body-bg: steelblue;
   --menu-element-height: 30px;
-  --logo-heigth: 70px;
+  --logo-heigth: 71px;
 }
 
 @font-face {
@@ -35,6 +35,7 @@ header {
   height: 100%;
   position: relative;
   z-index: 1;
+  border-bottom: var(--menu-text) 1px solid;
 }
 
 .logo {
@@ -68,6 +69,14 @@ header {
 
 nav #dropdown a:hover {
   text-decoration: dashed underline 2px;
+}
+
+nav #dropdown li:last-child {
+  border-bottom: none;
+}
+
+nav #dropdown ul:first-child {
+  border-bottom: none;
 }
 
 .menu-icon {

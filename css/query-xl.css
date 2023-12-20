@@ -24,16 +24,18 @@
   }
 
   nav #dropdown > li > ul {
+    margin-top: 21px;
     position: absolute;
     top: 100%;
     display: flex;
     flex-wrap: wrap;
-    border-top: none !important;
+    border-left: var(--menu-text) 1px solid;
+    border-right: var(--menu-text) 1px solid;
+    border-bottom: var(--menu-text) 1px solid;
   }
 
   nav #dropdown > li > ul.hiden {
-    border-bottom: none !important;
-    border-top: none !important;
+    /* border-top: none !important; */
   }
 
   nav #dropdown ul > li {

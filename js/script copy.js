@@ -1,7 +1,4 @@
 /////////////////////////////////////////////////////////////////////////////////
-
-// const { unlinkSync } = require("fs");
-
 //rucni zadani polozek do menu
 const formular = document.querySelector("form");
 const countMain = document.querySelector(".countMain");
@@ -14,9 +11,7 @@ formular.addEventListener("submit", (e) => {
   let xxx = countMain.value;
   e.preventDefault();
   console.log(xxx);
-  const element_Dropdown_menuZ = document.getElementById("dropdown");
-  element_Dropdown_menuZ.replaceChildren();
-  // function RELOAD_ALL();
+  element_Dropdown_menuZ.remove();
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,118 +77,103 @@ function genMainPosition() {
 genMainPosition();
 
 //klasovani pro animace hamburgr menu
-function MenuIconListenClic(e) {
+function MenuListenClic(e) {
   document.querySelector(".menu-icon").addEventListener("click", e);
 }
-
 function menuAnimace() {
-  const dropdown = document.getElementById("dropdown");
-  const menuIcon = document.querySelector(".menu-icon");
-  const svg = menuIcon.querySelector("svg");
-  svg.classList.toggle("active");
-  dropdown.classList.toggle("off");
+  const element_Dropdown_menu = document.getElementById("dropdown");
+  const element_Svg_Of_Hamburger = document.querySelector("svg");
+  element_Svg_Of_Hamburger.classList.toggle("active");
+  element_Dropdown_menu.classList.toggle("off");
 }
-MenuIconListenClic(menuAnimace);
 
-function MainSectionListenClic(e) {
-  document.querySelector("main").addEventListener("click", e);
-}
+MenuListenClic(menuAnimace());
+
+document.querySelector("main").addEventListener("click", menuHideOnClic);
 function menuHideOnClic() {
-  const dropdown = document.getElementById("dropdown");
-  const svg = document.querySelector("svg");
-  if (dropdown.classList.contains("off")) {
-    svg.classList.remove("active");
-    dropdown.classList.remove("off");
+  const element_Dropdown_menu = document.getElementById("dropdown");
+  const element_Svg_Of_Hamburger = document.querySelector("svg");
+  if (element_Dropdown_menu.classList.contains("off")) {
+    element_Svg_Of_Hamburger.classList.remove("active");
+    element_Dropdown_menu.classList.remove("off");
   }
 }
-MainSectionListenClic(menuHideOnClic);
+/////////////////////////////////////////////////////////////////////////////////
 
-//pridavani elementum UL jestli ne prazdny
 function addColapse() {
-  const allUl = document.getElementById("dropdown").querySelectorAll("ul");
-  let i = 0;
-  allUl.forEach((findCountOfElements) => {
-    let ul = allUl[i];
-
-    let allLi = findCountOfElements.querySelectorAll("li");
-
-    if (allLi.length >= 1) {
-      ul.classList.add("colapse");
-      ul.classList.add("hiden");
-    }
-    i++;
-  });
-}
-addColapse();
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-//PREPSAT KOD NIZ
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-//pridavani span do vnitr tagu a
-function qwer() {
-  const all_Elements_A_From_element_Dropdown_menu = document
-    .getElementById("dropdown")
-    .querySelectorAll("a");
-
-  all_Elements_A_From_element_Dropdown_menu.forEach((existA) => {
-    const newspan = document.createElement("span");
-    existA.appendChild(newspan);
-  });
-
-  /////////////////////////////////////////////////////////////////////////////////
-  //tady zacina hra s dodavanim nazv pro jednotlive MAIN
-
-  const element_Dropdown_menu = document.getElementById("dropdown");
-  const firstLevelAInLiElement = element_Dropdown_menu.querySelectorAll(
-    ":scope >  li  > a > span"
-  );
-
-  let x = 1;
-  firstLevelAInLiElement.forEach((addMAINToA) => {
-    addMAINToA.textContent = "MAIN " + x++;
-  });
-
-  // Jestli u vnitr v MAIN neco je:
   const all_Elements_Ul_From_element_Dropdown_menu = document
     .getElementById("dropdown")
     .querySelectorAll("ul");
-  all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
-    //pridavani klasu
-    if (allUlfromMenu.hasChildNodes()) {
-      const ns = "http://www.w3.org/2000/svg";
-      const newspan = document.createElement("span");
-      const svg = document.createElementNS(ns, "svg");
-      const path = document.createElementNS(ns, "path");
-      newspan.classList.add("btnarrow");
-      newspan.classList.add("downarrow");
-      newspan.appendChild(svg);
-      svg.appendChild(path);
-      svg.setAttribute("viewBox", "0 0 10 10");
-      allUlfromMenu.parentNode.classList.add("togglelist");
-      allUlfromMenu.parentNode.insertBefore(newspan, allUlfromMenu);
+  //oh jo, ten kousek kodu zacal psat do prednasky o forEach:), nevim uz nemam silu hrabat, pak po nalade prepisu
+  for (let i = 0; i < all_Elements_Ul_From_element_Dropdown_menu.length; i++) {
+    if (
+      all_Elements_Ul_From_element_Dropdown_menu[i].querySelectorAll("li")
+        .length >= 1
+    ) {
+      // console.log(all_Elements_Ul_From_element_Dropdown_menu[i]);
+      // all_Elements_Ul_From_element_Dropdown_menu[i].setAttribute("id", i); //for me, control n consol
+      all_Elements_Ul_From_element_Dropdown_menu[i].classList.add("colapse");
+      all_Elements_Ul_From_element_Dropdown_menu[i].classList.add("hiden");
     }
-
-    const allChildLiWithAFromMenu = allUlfromMenu.querySelectorAll(
-      ":scope >  li > a > span"
-    );
-
-    let z = 1;
-    let y = 1;
-    allChildLiWithAFromMenu.forEach((addMenuToA) => {
-      addMenuToA.textContent = "Menu " + y + " - " + z++;
-    });
-    y++;
-  });
+  }
 }
 
-qwer();
+addColapse();
+
+/////////////////////////////////////////////////////////////////////////////////
+//pridavani span do vnitr tagu a
+const all_Elements_A_From_element_Dropdown_menu = document
+  .getElementById("dropdown")
+  .querySelectorAll("a");
+
+all_Elements_A_From_element_Dropdown_menu.forEach((existA) => {
+  const newspan = document.createElement("span");
+  existA.appendChild(newspan);
+});
+
+/////////////////////////////////////////////////////////////////////////////////
+//tady zacina hra s dodavanim nazv pro jednotlive MAIN
+const element_Dropdown_menu = document.getElementById("dropdown");
+const firstLevelAInLiElement = element_Dropdown_menu.querySelectorAll(
+  ":scope >  li  > a > span"
+);
+
+let x = 1;
+firstLevelAInLiElement.forEach((addMAINToA) => {
+  addMAINToA.textContent = "MAIN " + x++;
+});
+
+// Jestli u vnitr v MAIN neco je:
+const all_Elements_Ul_From_element_Dropdown_menu = document
+  .getElementById("dropdown")
+  .querySelectorAll("ul");
+all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
+  //pridavani klasu
+  if (allUlfromMenu.hasChildNodes()) {
+    const ns = "http://www.w3.org/2000/svg";
+    const newspan = document.createElement("span");
+    const svg = document.createElementNS(ns, "svg");
+    const path = document.createElementNS(ns, "path");
+    newspan.classList.add("btnarrow");
+    newspan.classList.add("downarrow");
+    newspan.appendChild(svg);
+    svg.appendChild(path);
+    svg.setAttribute("viewBox", "0 0 10 10");
+    allUlfromMenu.parentNode.classList.add("togglelist");
+    allUlfromMenu.parentNode.insertBefore(newspan, allUlfromMenu);
+  }
+
+  const allChildLiWithAFromMenu = allUlfromMenu.querySelectorAll(
+    ":scope >  li > a > span"
+  );
+
+  let z = 1;
+  let y = 1;
+  allChildLiWithAFromMenu.forEach((addMenuToA) => {
+    addMenuToA.textContent = "Menu " + y + " - " + z++;
+  });
+  y++;
+});
 
 /////////////////////////////////////////////////////////////////////////////////
 //odeber z css var vysky jednotlive polozky menu
@@ -311,7 +291,6 @@ dropdown.onclick = function (event) {
     }
   }
 };
+/////////////////////////////////////////////////////////////////////////////////
 
-// function RELOAD_ALL() {
-//   genMainPosition();
-// }
+const element_Dropdown_menuZ = document.getElementById("dropdown");

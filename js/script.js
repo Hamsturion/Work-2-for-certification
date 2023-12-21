@@ -1,96 +1,101 @@
 /////////////////////////////////////////////////////////////////////////////////
 //rucni zadani polozek do menu
 const formular = document.querySelector("form");
-formular.addEventListener("submit", () => {
-  console.log(100);
+const countMain = document.querySelector(".countMain");
+// const countLevelsInMain = document.querySelector(".countLevelsInMain");
+// const countDeepsLevelsInMain = document.querySelector(
+//   ".countDeepsLevelsInMain"
+// );
+
+formular.addEventListener("submit", (e) => {
+  let xxx = countMain.value;
+  e.preventDefault();
+  console.log(xxx);
+  element_Dropdown_menuZ.remove();
 });
-//generace nahodnych polozek do menu
-// let countMainFromUser = prompt("Kolik prejete polozek MAIN?");
-// let countDeepLevelsFromUser = prompt("Jakou prejete hloubku levelu?");
-const element_Dropdown_menuX = document.getElementById("dropdown");
 
-//pocet MAIN
-
-//Generace vlozenych menu
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Generace menu s naslednym nahodnym vlozenim do sebe
 const Level = function genLevel() {
   let newFrag = document.createDocumentFragment();
+  const a = document.createElement("a");
+  const li = document.createElement("li");
   const ul = document.createElement("ul");
 
-  let c1 = Math.ceil(Math.random() * 2);
+  let c1 = Math.ceil(Math.random() * 2); //2 opakovani, jestli bude 3 a vic nasobne se zvetsuji sansi opakovani (20k iteraci a vic)
   for (let i = 0; i <= c1; i++) {
     let c2 = Math.ceil(Math.random() * 3);
 
     if (c2 == 1) {
+      //vlozeni samo do sebe
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
       newFrag.appendChild(li);
       newFrag.appendChild(Level());
     } else if (c2 == 2) {
+      //bez vlozeni
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
       newFrag.appendChild(li);
     } else if (c2 == 3) {
+      //prazdna polozka
       null;
     }
   }
 
   ul.appendChild(newFrag);
-  const a = document.createElement("a");
-  const li = document.createElement("li");
   li.appendChild(a);
   li.appendChild(ul);
   newFrag.appendChild(li);
   return newFrag;
 };
 
+//Vytvoreni prazdne polozky menu MAIN
 function genMain() {
+  const element_Dropdown_menuX = document.getElementById("dropdown");
   const li = document.createElement("li");
   const a = document.createElement("a");
   li.appendChild(a);
   element_Dropdown_menuX.appendChild(li);
 }
 
-//Vytvoreni nahodnych MAIN a vlozenych Menu
-let countMainFromUser = Math.ceil(Math.random() * 5 + 4);
-for (let i = 1; i <= countMainFromUser; i++) {
-  let c = Math.ceil(Math.random() * 2);
-  if (c == 1) {
-    genMain();
-  } else if (c == 2) {
-    element_Dropdown_menuX.appendChild(Level());
+//Vytvoreni nahodnych poctu prazdnych MAIN a vlozenych Menu s vlozenim
+function genMainPosition() {
+  let countMainFromUser = Math.ceil(Math.random() * 5 + 4);
+  for (let i = 1; i <= countMainFromUser; i++) {
+    const element_Dropdown_menuX = document.getElementById("dropdown");
+    let c = Math.ceil(Math.random() * 2);
+    if (c == 1) {
+      genMain();
+    } else if (c == 2) {
+      element_Dropdown_menuX.appendChild(Level());
+    }
   }
 }
+genMainPosition();
 
-/////////////////////////////////////////////////////////////////////////////////
-const element_Dropdown_menu = document.getElementById("dropdown");
-/////////////////////////////////////////////////////////////////////////////////
-//odeber z css var vysky jednotlive polozky menu
-const factHeightSorce = getComputedStyle(document.documentElement)
-  .getPropertyValue("--menu-element-height")
-  .replace("px", "");
-const factHeight = parseInt(factHeightSorce);
-/////////////////////////////////////////////////////////////////////////////////
 //pro zadavani v elementy svg
-const ns = "http://www.w3.org/2000/svg";
-const element_Svg_Of_Hamburger = document.querySelector("svg");
-/////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////
 const all_Elements_Ul_From_element_Dropdown_menu = document
   .getElementById("dropdown")
   .querySelectorAll("ul");
 
 /////////////////////////////////////////////////////////////////////////////////
 //klasovani pro animace hamburgr menu
+const element_Dropdown_menu = document.getElementById("dropdown");
 document.querySelector(".menu-icon").addEventListener("click", menuAnimace);
 function menuAnimace() {
+  const element_Svg_Of_Hamburger = document.querySelector("svg");
   element_Svg_Of_Hamburger.classList.toggle("active");
   element_Dropdown_menu.classList.toggle("off");
 }
 
 document.querySelector("main").addEventListener("click", menuHideOnClic);
 function menuHideOnClic() {
+  const element_Svg_Of_Hamburger = document.querySelector("svg");
   if (element_Dropdown_menu.classList.contains("off")) {
     element_Svg_Of_Hamburger.classList.remove("active");
     element_Dropdown_menu.classList.remove("off");
@@ -146,6 +151,7 @@ firstLevelAInLiElement.forEach((addMAINToA) => {
 all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
   //pridavani klasu
   if (allUlfromMenu.hasChildNodes()) {
+    const ns = "http://www.w3.org/2000/svg";
     const newspan = document.createElement("span");
     const svg = document.createElementNS(ns, "svg");
     const path = document.createElementNS(ns, "path");
@@ -171,6 +177,14 @@ all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
 });
 
 /////////////////////////////////////////////////////////////////////////////////
+//odeber z css var vysky jednotlive polozky menu
+function getElementFromCss() {
+  const factHeightSorce = getComputedStyle(document.documentElement)
+    .getPropertyValue("--menu-element-height")
+    .replace("px", "");
+  const factHeight = parseInt(factHeightSorce);
+  return factHeight;
+}
 
 dropdown.onclick = function (event) {
   if (event.target.classList.contains("btnarrow")) {
@@ -201,7 +215,9 @@ dropdown.onclick = function (event) {
         if (heightPx != null && heightPx <= 0) {
           let heightLessPX = 0;
           targetUlContainer.style.maxHeight =
-            sum_CountOf_AllLiInCurrentUl * factHeight + heightLessPX + "px";
+            sum_CountOf_AllLiInCurrentUl * getElementFromCss() +
+            heightLessPX +
+            "px";
           //pridavame vysku skutecnou
         }
       } else {
@@ -217,12 +233,12 @@ dropdown.onclick = function (event) {
             if (heightPx == "") {
               //estli taked level neni cisty
               targetUlContainer.style.maxHeight =
-                sum_CountOf_AllLiInCurrentUl * factHeight + "px ";
+                sum_CountOf_AllLiInCurrentUl * getElementFromCss() + "px ";
               let heightPx = element.style.maxHeight;
               let heightLessPX = heightPx.replace("px", "");
               element.style.maxHeight =
                 parseInt(heightLessPX) +
-                sum_CountOf_AllLiInCurrentUl * factHeight +
+                sum_CountOf_AllLiInCurrentUl * getElementFromCss() +
                 "px ";
             } else if (heightPx != "") {
               //estli taked level cisty
@@ -277,3 +293,5 @@ dropdown.onclick = function (event) {
   }
 };
 /////////////////////////////////////////////////////////////////////////////////
+
+const element_Dropdown_menuZ = document.getElementById("dropdown");

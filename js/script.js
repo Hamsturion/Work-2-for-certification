@@ -125,62 +125,55 @@ function addColapse() {
   });
 }
 addColapse();
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-//PREPSAT KOD NIZ
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-//pridavani span do vnitr tagu a
-function qwer() {
-  const all_Elements_A_From_element_Dropdown_menu = document
+
+//pridavani tagu
+function AddForAllASpansAndArrowsInMenu() {
+  //pridavani span do vnitr kazdeho tagu a
+  const allAFromDropdown = document
     .getElementById("dropdown")
     .querySelectorAll("a");
 
-  all_Elements_A_From_element_Dropdown_menu.forEach((existA) => {
+  allAFromDropdown.forEach((addAInSpan) => {
     const newspan = document.createElement("span");
-    existA.appendChild(newspan);
+    addAInSpan.appendChild(newspan);
   });
+}
+AddForAllASpansAndArrowsInMenu();
 
-  /////////////////////////////////////////////////////////////////////////////////
-  //tady zacina hra s dodavanim nazv pro jednotlive MAIN
-
+function addMAINsForFirstLiInMenu() {
+  //dodavani nazv pro prvni elementy MAIN
   const element_Dropdown_menu = document.getElementById("dropdown");
   const firstLevelAInLiElement = element_Dropdown_menu.querySelectorAll(
-    ":scope >  li  > a > span"
+    ":scope > li > a > span"
   );
 
   let x = 1;
   firstLevelAInLiElement.forEach((addMAINToA) => {
     addMAINToA.textContent = "MAIN " + x++;
   });
+}
+addMAINsForFirstLiInMenu();
 
-  // Jestli u vnitr v MAIN neco je:
-  const all_Elements_Ul_From_element_Dropdown_menu = document
+function addTagsForAllUl() {
+  //pridavani tagu a klasu do vnitr vsech ul jestli maji potomky
+  const allUlFromMenu = document
     .getElementById("dropdown")
     .querySelectorAll("ul");
-  all_Elements_Ul_From_element_Dropdown_menu.forEach((allUlfromMenu) => {
-    //pridavani klasu
-    if (allUlfromMenu.hasChildNodes()) {
-      const ns = "http://www.w3.org/2000/svg";
-      const newspan = document.createElement("span");
-      const svg = document.createElementNS(ns, "svg");
-      const path = document.createElementNS(ns, "path");
-      newspan.classList.add("btnarrow");
-      newspan.classList.add("downarrow");
-      newspan.appendChild(svg);
-      svg.appendChild(path);
-      svg.setAttribute("viewBox", "0 0 10 10");
-      allUlfromMenu.parentNode.classList.add("togglelist");
-      allUlfromMenu.parentNode.insertBefore(newspan, allUlfromMenu);
-    }
 
-    const allChildLiWithAFromMenu = allUlfromMenu.querySelectorAll(
+  allUlFromMenu.forEach((forAnyUlInMenu) => {
+    const ns = "http://www.w3.org/2000/svg";
+    const newspan = document.createElement("span");
+    const svg = document.createElementNS(ns, "svg");
+    const path = document.createElementNS(ns, "path");
+    newspan.classList.add("btnarrow");
+    newspan.classList.add("downarrow");
+    newspan.appendChild(svg);
+    svg.appendChild(path);
+    svg.setAttribute("viewBox", "0 0 10 10");
+    forAnyUlInMenu.parentNode.classList.add("togglelist");
+    forAnyUlInMenu.parentNode.insertBefore(newspan, forAnyUlInMenu);
+
+    const allChildLiWithAFromMenu = forAnyUlInMenu.querySelectorAll(
       ":scope >  li > a > span"
     );
 
@@ -192,9 +185,18 @@ function qwer() {
     y++;
   });
 }
+addTagsForAllUl();
 
-qwer();
-
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+//PREPSAT KOD NIZ
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 //odeber z css var vysky jednotlive polozky menu
 function getElementFromCss() {

@@ -25,10 +25,6 @@
   nav #dropdown li > span:hover {
     border-radius: 10px;
   }
-  nav #dropdown:last-child li:last-child {
-    /* box-sizing: border-box; */
-    /* cursor: pointer; */
-  }
 
   nav #dropdown .btnarrow {
     display: flex;

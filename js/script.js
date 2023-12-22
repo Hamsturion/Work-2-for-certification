@@ -123,7 +123,11 @@ function addColapse() {
 
     if (allLi.length >= 0) {
       ul.classList.add("colapse");
+      ///////////////////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////////////////////
       ul.classList.add("hiden");
+      ///////////////////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////////////////////
     }
     i++;
   });
@@ -212,7 +216,6 @@ onclick = function (event) {
   if (event.target.classList.contains("btnarrow")) {
     const targetBtnarrow = event.target.parentNode.querySelector(".btnarrow");
     const targetUlContainer = event.target.parentNode.querySelector("ul");
-    console.log(targetUlContainer);
     //dulezity radek co odebira pocet radku menu pro podalsi vypocet vysky max-height pro animace
     let sum_CountOf_AllLiInCurrentUl =
       targetUlContainer.querySelectorAll(":scope > li").length;

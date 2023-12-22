@@ -108,7 +108,7 @@ function menuHideOnClic() {
 }
 MainSectionListenClic(menuHideOnClic);
 
-//pridavani elementum UL jestli ne prazdny
+//pridavani classu elementum UL jestli ne prazdny
 function addColapse() {
   const allUl = document.getElementById("dropdown").querySelectorAll("ul");
   let i = 0;
@@ -117,7 +117,7 @@ function addColapse() {
 
     let allLi = findCountOfElements.querySelectorAll("li");
 
-    if (allLi.length >= 1) {
+    if (allLi.length >= 0) {
       ul.classList.add("colapse");
       ul.classList.add("hiden");
     }
@@ -161,31 +161,48 @@ function addTagsForAllUl() {
     .querySelectorAll("ul");
 
   allUlFromMenu.forEach((forAnyUlInMenu) => {
-    const ns = "http://www.w3.org/2000/svg";
-    const newspan = document.createElement("span");
-    const svg = document.createElementNS(ns, "svg");
-    const path = document.createElementNS(ns, "path");
-    newspan.classList.add("btnarrow");
-    newspan.classList.add("downarrow");
-    newspan.appendChild(svg);
-    svg.appendChild(path);
-    svg.setAttribute("viewBox", "0 0 10 10");
-    forAnyUlInMenu.parentNode.classList.add("togglelist");
-    forAnyUlInMenu.parentNode.insertBefore(newspan, forAnyUlInMenu);
-
-    const allChildLiWithAFromMenu = forAnyUlInMenu.querySelectorAll(
-      ":scope >  li > a > span"
-    );
-
-    let z = 1;
-    let y = 1;
-    allChildLiWithAFromMenu.forEach((addMenuToA) => {
-      addMenuToA.textContent = "Menu " + y + " - " + z++;
-    });
-    y++;
+    if (forAnyUlInMenu.hasChildNodes()) {
+      const ns = "http://www.w3.org/2000/svg";
+      const newspan = document.createElement("span");
+      const svg = document.createElementNS(ns, "svg");
+      const path = document.createElementNS(ns, "path");
+      newspan.classList.add("btnarrow");
+      newspan.classList.add("downarrow");
+      newspan.appendChild(svg);
+      svg.appendChild(path);
+      svg.setAttribute("viewBox", "0 0 10 10");
+      forAnyUlInMenu.parentNode.classList.add("togglelist");
+      forAnyUlInMenu.parentNode.insertBefore(newspan, forAnyUlInMenu);
+    }
   });
 }
 addTagsForAllUl();
+
+function addMenusForAllLiInMenu() {
+  //dodavani nazv pro prvni elementy MAIN
+  const allUlFromMenu = document
+    .getElementById("dropdown")
+    .querySelectorAll("ul");
+  allUlFromMenu.forEach((forAnyLiInMenu) => {
+    const allLiInUl = forAnyLiInMenu.querySelectorAll(":scope>li");
+    let y = 0;
+    allLiInUl.forEach((getUl) => {
+      const span = getUl.querySelector(":scope>a>span");
+      y++;
+      span.textContent = "Menu " + y;
+    });
+  });
+}
+addMenusForAllLiInMenu();
+
+//odeber z css var vysky jednotlive polozky menu
+function getElementFromCss() {
+  const factHeightSorce = getComputedStyle(document.documentElement)
+    .getPropertyValue("--menu-element-height")
+    .replace("px", "");
+  const factHeight = parseInt(factHeightSorce);
+  return factHeight;
+}
 
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
@@ -198,15 +215,7 @@ addTagsForAllUl();
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
-//odeber z css var vysky jednotlive polozky menu
-function getElementFromCss() {
-  const factHeightSorce = getComputedStyle(document.documentElement)
-    .getPropertyValue("--menu-element-height")
-    .replace("px", "");
-  const factHeight = parseInt(factHeightSorce);
-  return factHeight;
-}
-
+const dropdown = document.getElementById("dropdown");
 dropdown.onclick = function (event) {
   if (event.target.classList.contains("btnarrow")) {
     const targetBtnarrow = event.target.parentNode.querySelector(".btnarrow");

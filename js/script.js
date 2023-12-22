@@ -1,22 +1,19 @@
 /////////////////////////////////////////////////////////////////////////////////
 
-// const { unlinkSync } = require("fs");
-
 //rucni zadani polozek do menu
 const formular = document.querySelector("form");
 const countMain = document.querySelector(".countMain");
-// const countLevelsInMain = document.querySelector(".countLevelsInMain");
-// const countDeepsLevelsInMain = document.querySelector(
-//   ".countDeepsLevelsInMain"
-// );
+const countLevelsInMain = document.querySelector(".countLevelsInMain");
+const countDeepsLevelsInMain = document.querySelector(
+  ".countDeepsLevelsInMain"
+);
 
 formular.addEventListener("submit", (e) => {
   let xxx = countMain.value;
   e.preventDefault();
-  console.log(xxx);
-  const element_Dropdown_menuZ = document.getElementById("dropdown");
-  element_Dropdown_menuZ.replaceChildren();
-  // function RELOAD_ALL();
+  const dropdown = document.getElementById("dropdown");
+  dropdown.replaceChildren();
+  RELOAD_ALL(xxx);
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,14 +64,20 @@ function genMain() {
 }
 
 //Vytvoreni nahodnych poctu prazdnych MAIN a vlozenych Menu s vlozenim
-function genMainPosition() {
-  let countMainFromUser = Math.ceil(Math.random() * 5 + 4);
+function genMainPosition(n) {
+  let countMainFromUser;
+  if (n == null) {
+    countMainFromUser = Math.ceil(Math.random() * 4 + 5);
+  } else {
+    countMainFromUser = n;
+  }
+
   for (let i = 1; i <= countMainFromUser; i++) {
     const element_Dropdown_menuX = document.getElementById("dropdown");
-    let c = Math.ceil(Math.random() * 2);
+    let c = Math.ceil(Math.random() * 3);
     if (c == 1) {
       genMain();
-    } else if (c == 2) {
+    } else if (c == 2 || c == 3) {
       element_Dropdown_menuX.appendChild(Level());
     }
   }
@@ -98,6 +101,7 @@ MenuIconListenClic(menuAnimace);
 function MainSectionListenClic(e) {
   document.querySelector("main").addEventListener("click", e);
 }
+
 function menuHideOnClic() {
   const dropdown = document.getElementById("dropdown");
   const svg = document.querySelector("svg");
@@ -204,27 +208,15 @@ function getElementFromCss() {
   return factHeight;
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-//PREPSAT KOD NIZ
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-const dropdown = document.getElementById("dropdown");
-dropdown.onclick = function (event) {
+onclick = function (event) {
   if (event.target.classList.contains("btnarrow")) {
     const targetBtnarrow = event.target.parentNode.querySelector(".btnarrow");
     const targetUlContainer = event.target.parentNode.querySelector("ul");
+    console.log(targetUlContainer);
     //dulezity radek co odebira pocet radku menu pro podalsi vypocet vysky max-height pro animace
     let sum_CountOf_AllLiInCurrentUl =
       targetUlContainer.querySelectorAll(":scope > li").length;
     const upLevelColapse = event.target.closest(".colapse");
-    if (!targetUlContainer) return;
     //pro animaci sipky v rozklikavacim menu
     if (targetBtnarrow.classList.contains("downarrow")) {
       targetBtnarrow.classList.remove("downarrow");
@@ -323,6 +315,11 @@ dropdown.onclick = function (event) {
   }
 };
 
-// function RELOAD_ALL() {
-//   genMainPosition();
-// }
+function RELOAD_ALL(n) {
+  genMainPosition(n);
+  addColapse();
+  AddForAllASpansAndArrowsInMenu();
+  addMAINsForFirstLiInMenu();
+  addTagsForAllUl();
+  addMenusForAllLiInMenu();
+}

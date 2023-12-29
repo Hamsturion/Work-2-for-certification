@@ -33,7 +33,7 @@ const Level = () => {
 
   let c1 = Math.ceil(Math.random() * 2); //2 opakovani, jestli bude 3 a vic nasobne se zvetsuji sansi opakovani (20k iteraci a vic)
   for (let i = 0; i <= c1; i++) {
-    let c2 = Math.ceil(Math.random() * 4);
+    let c2 = Math.ceil(Math.random() * 4); //if c2 = 3 or 4 MAIN without levels
 
     if (c2 == 1) {
       //vlozeni samo do sebe
@@ -42,21 +42,23 @@ const Level = () => {
       li.appendChild(a);
       newFrag.appendChild(li);
       newFrag.appendChild(Level());
+      ul.appendChild(newFrag);
     } else if (c2 == 2) {
       //bez vlozeni
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
       newFrag.appendChild(li);
-    } else if (c2 == 3 || c2 == 4) {
-      //prazdna polozka
-      null;
+      ul.appendChild(newFrag);
     }
   }
 
-  ul.appendChild(newFrag);
   li.appendChild(a);
-  li.appendChild(ul);
+
+  if (ul.hasChildNodes()) {
+    li.appendChild(ul);
+  }
+
   newFrag.appendChild(li);
   return newFrag;
 };
@@ -213,7 +215,7 @@ onclick = function (event) {
       //-------------------      +++         -----------------------//
       ///////////////////////////////////////////////////////////////
 
-      if (upLevelColapse == null) {
+      if (!upLevelColapse) {
         let heightPx = targetUlContainer.style.maxHeight;
         //kontrola estli tento level neco ma a take 0 se hodi
         if (heightPx != null && heightPx <= 0) {
@@ -232,9 +234,8 @@ onclick = function (event) {
           //opakovat az nedojdou levely
           if (element.classList.contains("colapse")) {
             //estli level ma v sobe collapse
-
             let heightPx = targetUlContainer.style.maxHeight;
-            if (heightPx == "") {
+            if (!heightPx) {
               //estli taked level neni cisty
               targetUlContainer.style.maxHeight =
                 sum_CountOf_AllLiInCurrentUl * getElementFromCss() + "px ";
@@ -244,7 +245,7 @@ onclick = function (event) {
                 parseInt(heightLessPX) +
                 sum_CountOf_AllLiInCurrentUl * getElementFromCss() +
                 "px ";
-            } else if (heightPx != "") {
+            } else {
               //estli taked level cisty
 
               let heightPxCurent = targetUlContainer.style.maxHeight;
@@ -272,6 +273,7 @@ onclick = function (event) {
         let element = targetBtnarrow;
         while (element.parentNode != dropdown) {
           element = element.parentNode;
+          console.log(element);
           //opakovat levely vyse az nedojdou levely
           if (element.classList.contains("colapse")) {
             if (element != targetUlContainer) {

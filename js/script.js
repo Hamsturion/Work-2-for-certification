@@ -115,6 +115,7 @@ const addColapse = (mainMenuParentElement) => {
       ul.classList.add("colapse");
       ///////////////////////////////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
+      // ul.setAttribute("id", i);
       ul.classList.add("hiden");
       ///////////////////////////////////////////////////////////////////////////////////
       ///////////////////////////////////////////////////////////////////////////////////
@@ -185,30 +186,99 @@ const addMenusForAllLiInMenu = (mainMenuParentElement) => {
 addMenusForAllLiInMenu(dropdown);
 
 //odeber z css var vysky jednotlive polozky menu
-const getElementFromCss = () => {
+const getElementFromCss = (cssElement) => {
   const factHeightSorce = getComputedStyle(document.documentElement)
-    .getPropertyValue("--menu-element-height")
+    .getPropertyValue(cssElement)
     .replace("px", "");
   const factHeight = parseInt(factHeightSorce);
   return factHeight;
 };
 
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+//refactoring in progress
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+// const BtnArrowsListenClic = (e) => {
+//   addEventListener("click", e);
+// };
+
+// btnNameClass = "btnarrow";
+// minusIcoClass = "uparrow";
+// plusIcoClass = "downarrow";
+// hideClass = "hiden";
+
+// const plusElements = (e) => {
+//   //"t_" - targetet
+//   const t_btnArrow = e.target.parentNode.querySelector("." + btnNameClass);
+//   const t_Ul = e.target.parentNode.querySelector("ul");
+//   const t_AllLiInCurrentUl = t_Ul.querySelectorAll(":scope > li").length;
+//   const t_upLevelUl = e.target.closest("ul");
+//   if (e.target.classList.contains(btnNameClass)) {
+//     t_btnArrow.classList.toggle(minusIcoClass);
+//     t_btnArrow.classList.toggle(plusIcoClass);
+//     if (t_Ul.classList.contains(hideClass)) {
+//       if (!t_upLevelUl.id) {
+//         let heightPx = t_Ul.style.maxHeight;
+//         //kontrola estli tento UL nema zadanou zadanou vysku anebo zadano 0:
+//         if (heightPx != null && heightPx <= 0) {
+//           let heightLessPX = 0;
+//           t_Ul.style.maxHeight =
+//             t_AllLiInCurrentUl * getElementFromCss() + heightLessPX + "px";
+//           //pridavame vysku skutecnou
+//         }
+//       } else {
+//         //jinak jestli neco v levelu je a vic nez 0:
+//         let elementUl = t_Ul;
+//         while (!t_upLevelUl.id) {
+//           elementUl = elementUl.closest("ul");
+//           //opakovat az nedojdou levely
+//           // if (element.classList.contains("colapse")) {
+//           let heightPx = t_Ul.style.maxHeight;
+//           if (!heightPx) {
+//             //estli taked level neni cisty
+//             t_Ul.style.maxHeight =
+//               t_AllLiInCurrentUl * getElementFromCss("--menu-element-height") +
+//               "px ";
+//             let heightPx = element.style.maxHeight;
+//             let heightLessPX = heightPx.replace("px", "");
+//             elementUl.style.maxHeight =
+//               parseInt(heightLessPX) +
+//               t_AllLiInCurrentUl * getElementFromCss("--menu-element-height") +
+//               "px ";
+//           } else {
+//             //estli taked level cisty
+
+//             let heightPxCurent = t_Ul.style.maxHeight;
+//             let heightLessPXCurent = heightPxCurent.replace("px", "");
+//             let heightPx = element.style.maxHeight;
+//             let heightLessPX = heightPx.replace("px", "");
+
+//             elementUl.style.maxHeight =
+//               parseInt(heightLessPXCurent) + parseInt(heightLessPX) + "px ";
+//             //zase
+//           }
+//           // }
+//         }
+//       }
+//     }
+//   }
+// };
+// BtnArrowsListenClic(plusElements);
+
 onclick = function (event) {
   if (event.target.classList.contains("btnarrow")) {
-    const targetBtnarrow = event.target.parentNode.querySelector(".btnarrow");
+    const targetBtnArrow = event.target.parentNode.querySelector(".btnarrow");
     const targetUlContainer = event.target.parentNode.querySelector("ul");
     //dulezity radek co odebira pocet radku menu pro podalsi vypocet vysky max-height pro animace
     let sum_CountOf_AllLiInCurrentUl =
       targetUlContainer.querySelectorAll(":scope > li").length;
     const upLevelColapse = event.target.closest(".colapse");
+
     //pro animaci sipky v rozklikavacim menu
-    if (targetBtnarrow.classList.contains("downarrow")) {
-      targetBtnarrow.classList.remove("downarrow");
-      targetBtnarrow.classList.add("uparrow");
-    } else {
-      targetBtnarrow.classList.remove("uparrow");
-      targetBtnarrow.classList.add("downarrow");
-    }
+
+    targetBtnArrow.classList.toggle("uparrow");
+    targetBtnArrow.classList.toggle("downarrow");
 
     if (targetUlContainer.classList.contains("hiden")) {
       ///////////////////////////////////////////////////////////////
@@ -221,14 +291,15 @@ onclick = function (event) {
         if (heightPx != null && heightPx <= 0) {
           let heightLessPX = 0;
           targetUlContainer.style.maxHeight =
-            sum_CountOf_AllLiInCurrentUl * getElementFromCss() +
+            sum_CountOf_AllLiInCurrentUl *
+              getElementFromCss("--menu-element-height") +
             heightLessPX +
             "px";
           //pridavame vysku skutecnou
         }
       } else {
         //jinak jestli neco v levelu je:
-        let element = targetBtnarrow;
+        let element = targetBtnArrow;
         while (element.parentNode != dropdown) {
           element = element.parentNode;
           //opakovat az nedojdou levely
@@ -238,12 +309,15 @@ onclick = function (event) {
             if (!heightPx) {
               //estli taked level neni cisty
               targetUlContainer.style.maxHeight =
-                sum_CountOf_AllLiInCurrentUl * getElementFromCss() + "px ";
+                sum_CountOf_AllLiInCurrentUl *
+                  getElementFromCss("--menu-element-height") +
+                "px ";
               let heightPx = element.style.maxHeight;
               let heightLessPX = heightPx.replace("px", "");
               element.style.maxHeight =
                 parseInt(heightLessPX) +
-                sum_CountOf_AllLiInCurrentUl * getElementFromCss() +
+                sum_CountOf_AllLiInCurrentUl *
+                  getElementFromCss("--menu-element-height") +
                 "px ";
             } else {
               //estli taked level cisty
@@ -270,10 +344,9 @@ onclick = function (event) {
         //tento level je 0, -");
       } else {
         //jinak jestli neco v levelu je:
-        let element = targetBtnarrow;
+        let element = targetBtnArrow;
         while (element.parentNode != dropdown) {
           element = element.parentNode;
-          console.log(element);
           //opakovat levely vyse az nedojdou levely
           if (element.classList.contains("colapse")) {
             if (element != targetUlContainer) {
@@ -291,10 +364,6 @@ onclick = function (event) {
       }
     }
     //po kliku se pridava nebo odstranuje klas
-    if (targetUlContainer.classList.contains("hiden")) {
-      targetUlContainer.classList.remove("hiden");
-    } else {
-      targetUlContainer.classList.add("hiden");
-    }
+    targetUlContainer.classList.toggle("hiden");
   }
 };

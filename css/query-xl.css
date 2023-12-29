@@ -62,7 +62,7 @@
     border-left: #1c446e 1px solid;
   }
 
-  nav #dropdown .colapse {
+  nav #dropdown ul {
     overflow: hidden;
     transition: max-height 0.5s ease-out;
   }

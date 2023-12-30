@@ -12,16 +12,16 @@ formular.addEventListener("submit", (e) => {
   let countFromUser = countMain.value;
   e.preventDefault();
   dropdown.replaceChildren();
-  RELOAD_ALL(countFromUser, dropdown);
+  ReloadAll(countFromUser, dropdown);
 });
 
-const RELOAD_ALL = (a, b) => {
-  genMainPosition(a, b);
-  addColapse(b);
+const ReloadAll = (a, b) => {
+  GenMainPosition(a, b);
+  AddColapse(b);
   AddForAllASpansAndArrowsInMenu(b);
-  addMAINsForFirstLiInMenu(b);
-  addTagsForAllUl(b);
-  addMenusForAllLiInMenu(b);
+  AddMAINsForFirstLiInMenu(b);
+  AddTagsForAllUl(b);
+  AddMenusForAllLiInMenu(b);
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Generace menu s naslednym nahodnym vlozenim do sebe
@@ -64,7 +64,7 @@ const Level = () => {
 };
 
 //Vytvoreni nahodnych poctu prazdnych MAIN a vlozenych Menu s vlozenim
-const genMainPosition = (countFromUser, mainMenuParentElement) => {
+const GenMainPosition = (countFromUser, mainMenuParentElement) => {
   let count;
   if (!countFromUser) {
     count = Math.ceil(Math.random() * 4 + 5);
@@ -76,25 +76,25 @@ const genMainPosition = (countFromUser, mainMenuParentElement) => {
     mainMenuParentElement.appendChild(Level());
   }
 };
-genMainPosition(0, dropdown);
+GenMainPosition(0, dropdown);
 
 //klasovani pro animace hamburgr menu
 MenuIconListenClic = (e) => {
   document.querySelector(".menu-icon").addEventListener("click", e);
 };
-const menuAnimace = () => {
+const MenuAnimace = () => {
   const dropdown = document.getElementById("dropdown");
   const menuIcon = document.querySelector(".menu-icon");
   const svg = menuIcon.querySelector("svg");
   svg.classList.toggle("active");
   dropdown.classList.toggle("off");
 };
-MenuIconListenClic(menuAnimace);
+MenuIconListenClic(MenuAnimace);
 
 const MainSectionListenClic = (e) => {
   document.querySelector("main").addEventListener("click", e);
 };
-const menuHideOnClic = () => {
+const MenuHideOnClic = () => {
   const dropdown = document.getElementById("dropdown");
   const svg = document.querySelector("svg");
   if (dropdown.classList.contains("off")) {
@@ -102,10 +102,10 @@ const menuHideOnClic = () => {
     dropdown.classList.remove("off");
   }
 };
-MainSectionListenClic(menuHideOnClic);
+MainSectionListenClic(MenuHideOnClic);
 
 //pridavani classu elementum UL jestli ne prazdny
-const addColapse = (mainMenuParentElement) => {
+const AddColapse = (mainMenuParentElement) => {
   const allUl = mainMenuParentElement.querySelectorAll("ul");
   let i = 0;
   allUl.forEach((findCountOfElements) => {
@@ -123,7 +123,7 @@ const addColapse = (mainMenuParentElement) => {
     i++;
   });
 };
-addColapse(dropdown);
+AddColapse(dropdown);
 
 //pridavani tagu
 const AddForAllASpansAndArrowsInMenu = (mainMenuParentElement) => {
@@ -136,7 +136,7 @@ const AddForAllASpansAndArrowsInMenu = (mainMenuParentElement) => {
 };
 AddForAllASpansAndArrowsInMenu(dropdown);
 
-const addMAINsForFirstLiInMenu = (mainMenuParentElement) => {
+const AddMAINsForFirstLiInMenu = (mainMenuParentElement) => {
   //dodavani nazv pro prvni elementy MAIN
   const firstLevelAInLiElement = mainMenuParentElement.querySelectorAll(
     ":scope > li > a > span"
@@ -147,9 +147,9 @@ const addMAINsForFirstLiInMenu = (mainMenuParentElement) => {
     addMAINToA.textContent = "MAIN " + x++;
   });
 };
-addMAINsForFirstLiInMenu(dropdown);
+AddMAINsForFirstLiInMenu(dropdown);
 
-const addTagsForAllUl = (mainMenuParentElement) => {
+const AddTagsForAllUl = (mainMenuParentElement) => {
   //pridavani tagu a klasu do vnitr vsech ul jestli maji potomky
   const allUlFromMenu = mainMenuParentElement.querySelectorAll("ul");
   allUlFromMenu.forEach((forAnyUlInMenu) => {
@@ -168,9 +168,9 @@ const addTagsForAllUl = (mainMenuParentElement) => {
     }
   });
 };
-addTagsForAllUl(dropdown);
+AddTagsForAllUl(dropdown);
 
-const addMenusForAllLiInMenu = (mainMenuParentElement) => {
+const AddMenusForAllLiInMenu = (mainMenuParentElement) => {
   //dodavani nazv pro vlozene elementy Menu
   const allUlFromMenu = mainMenuParentElement.querySelectorAll("ul");
   allUlFromMenu.forEach((forAnyLiInMenu) => {
@@ -183,10 +183,10 @@ const addMenusForAllLiInMenu = (mainMenuParentElement) => {
     });
   });
 };
-addMenusForAllLiInMenu(dropdown);
+AddMenusForAllLiInMenu(dropdown);
 
 //odeber z css var vysky jednotlive polozky menu
-const getElementFromCss = (cssElement) => {
+const ElemInCss = (cssElement) => {
   const factHeightSorce = getComputedStyle(document.documentElement)
     .getPropertyValue(cssElement)
     .replace("px", "");
@@ -198,111 +198,94 @@ const BtnArrowsListenClic = (e) => {
   addEventListener("click", e);
 };
 
-btnNameClass = "btnarrow";
-minusIcoClass = "uparrow";
-plusIcoClass = "downarrow";
-hideClass = "hiden";
-elementHeight = "--menu-element-height";
-elementHeightUnit = "px";
+const Plus = (ul, eh, eu) => {
+  //ul - element "UL"
+  //eh - element height from css
+  //eu - element height unit
 
-const plusElements = (e) => {
+  const upUl = ul.closest("ul");
+  const lic = ul.querySelectorAll(":scope > li").length;
+  if (upUl.id) {
+    let h_Eu = ul.style.maxHeight;
+    //kontrola estli tento UL nema zadanou zadanou vysku anebo zadano 0:
+    if (h_Eu != null && h_Eu <= 0) {
+      //pridavame vysku skutecnou
+      let h_NoEu = 0;
+      ul.style.maxHeight = lic * ElemInCss(eh) + h_NoEu + eu;
+    }
+  } else {
+    //jinak jestli neco v levelu je a vic nez 0:
+    let eUl = ul;
+    while (!eUl.id) {
+      eUl = eUl.parentNode.closest("ul");
+      //opakovat az nedojdou levely
+      let h_Eu = ul.style.maxHeight;
+      if (!h_Eu) {
+        //estli taked level neni cisty
+        let h_Eu = eUl.style.maxHeight;
+        let h_NoEu = h_Eu.replace(eu, "");
+
+        ul.style.maxHeight = lic * ElemInCss(eh) + eu;
+        eUl.style.maxHeight = parseInt(h_NoEu) + lic * ElemInCss(eh) + eu + " ";
+      } else {
+        //estli taked level cisty
+        let h_EuC = ul.style.maxHeight;
+        let h_NoEuC = h_EuC.replace(eu, "");
+        let h_Eu = eUl.style.maxHeight;
+        let h_NoEu = h_Eu.replace(eu, "");
+
+        eUl.style.maxHeight = parseInt(h_NoEuC) + parseInt(h_NoEu) + eu + " ";
+        //zase
+      }
+    }
+  }
+};
+
+const Minus = (ul, eu) => {
+  //ul - element "UL"
+  //eu - element height unit
+  const upUl = ul.closest("ul");
+  //kontrola estli tento level je 0
+  if (!upUl.id) {
+    //jinak jestli neco v levelu je:
+    let eUl = ul;
+    while (!eUl.id) {
+      eUl = eUl.parentNode.closest("ul");
+      //opakovat levely vyse az nedojdou levely
+      if (eUl != ul) {
+        //bereme level ktery neni tento a je vyse mu odebirame od jeho vysky tuto
+        let h_Eu = eUl.style.maxHeight; //element height
+        let h_EuC = ul.style.maxHeight; //curent element height
+        let h_NoEu = h_Eu.replace(eu, "");
+        let h_NoEuC = h_EuC.replace(eu, "");
+        eUl.style.maxHeight = parseInt(h_NoEu) - parseInt(h_NoEuC) + eu + " ";
+      }
+      //opakovat
+    }
+  }
+};
+
+const PlusMinusElements = (e) => {
+  btnNameClass = "btnarrow";
+  minusIcoClass = "uparrow";
+  plusIcoClass = "downarrow";
+  hideClass = "hiden";
+  elementHeight = "--menu-element-height";
+  elementHeightUnit = "px";
+
   if (e.target.classList.contains(btnNameClass)) {
     //"t_" - targetet
     const t_btnArrow = e.target.parentNode.querySelector("." + btnNameClass);
     const t_Ul = e.target.parentNode.querySelector("ul");
-    const t_AllLiInCurrentUl = t_Ul.querySelectorAll(":scope > li").length;
-    const t_upLevelUl = e.target.closest("ul");
 
+    if (t_btnArrow.classList.contains(plusIcoClass)) {
+      Plus(t_Ul, elementHeight, elementHeightUnit);
+    } else {
+      Minus(t_Ul, elementHeightUnit);
+    }
     t_btnArrow.classList.toggle(minusIcoClass);
     t_btnArrow.classList.toggle(plusIcoClass);
-
-    const plus = () => {
-      if (t_upLevelUl.id) {
-        let heightPx = t_Ul.style.maxHeight;
-        //kontrola estli tento UL nema zadanou zadanou vysku anebo zadano 0:
-        if (heightPx != null && heightPx <= 0) {
-          let heightLessPX = 0;
-          t_Ul.style.maxHeight =
-            t_AllLiInCurrentUl * getElementFromCss(elementHeight) +
-            heightLessPX +
-            elementHeightUnit;
-          //pridavame vysku skutecnou
-        }
-      } else {
-        //jinak jestli neco v levelu je a vic nez 0:
-        let elementUl = t_Ul;
-        while (!elementUl.id) {
-          elementUl = elementUl.parentNode.closest("ul");
-          //opakovat az nedojdou levely
-          let heightPx = t_Ul.style.maxHeight;
-          if (!heightPx) {
-            //estli taked level neni cisty
-            t_Ul.style.maxHeight =
-              t_AllLiInCurrentUl * getElementFromCss(elementHeight) +
-              elementHeightUnit;
-            let heightPx = elementUl.style.maxHeight;
-            let heightLessPX = heightPx.replace(elementHeightUnit, "");
-            elementUl.style.maxHeight =
-              parseInt(heightLessPX) +
-              t_AllLiInCurrentUl * getElementFromCss(elementHeight) +
-              elementHeightUnit +
-              " ";
-          } else {
-            //estli taked level cisty
-
-            let heightPxCurent = t_Ul.style.maxHeight;
-            let heightLessPXCurent = heightPxCurent.replace(
-              elementHeightUnit,
-              ""
-            );
-            let heightPx = elementUl.style.maxHeight;
-            let heightLessPX = heightPx.replace(elementHeightUnit, "");
-
-            elementUl.style.maxHeight =
-              parseInt(heightLessPXCurent) +
-              parseInt(heightLessPX) +
-              elementHeightUnit +
-              " ";
-            //zase
-          }
-        }
-      }
-    };
-
-    const minus = () => {
-      //kontrola estli tento level je 0
-      if (!t_upLevelUl.id) {
-        //jinak jestli neco v levelu je:
-        let elementUl = t_Ul;
-        while (!elementUl.id) {
-          elementUl = elementUl.parentNode.closest("ul");
-          //opakovat levely vyse az nedojdou levely
-          if (elementUl != t_Ul) {
-            //bereme level ktery neni tento a je vyse mu odebirame od jeho vysky tuto
-            let heightPx = elementUl.style.maxHeight;
-            let heightPxCurent = t_Ul.style.maxHeight;
-            let heightLessPX = heightPx.replace(elementHeightUnit, "");
-            let heightLessPXCurent = heightPxCurent.replace(
-              elementHeightUnit,
-              ""
-            );
-            elementUl.style.maxHeight =
-              parseInt(heightLessPX) -
-              parseInt(heightLessPXCurent) +
-              elementHeightUnit +
-              " ";
-          }
-          //opakovat
-        }
-      }
-    };
-
-    if (t_Ul.classList.contains(hideClass)) {
-      plus();
-    } else {
-      minus();
-    }
     t_Ul.classList.toggle(hideClass);
   }
 };
-BtnArrowsListenClic(plusElements);
+BtnArrowsListenClic(PlusMinusElements);

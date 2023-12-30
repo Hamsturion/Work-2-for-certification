@@ -233,15 +233,15 @@ const BtnArrowsListenClic = (e) => {
 
 const PlusMinusElements = (e) => {
   //spracovani Plus() a Minus() s pridavanim klasu
-  btnNameClass = "btnarrow";
-  minusIcoClass = "uparrow";
-  plusIcoClass = "downarrow";
-  hideClass = "hiden";
-  elementHeight = "--menu-element-height";
-  elementHeightUnit = "px";
+  const btnNameClass = "btnarrow";
+  const minusIcoClass = "uparrow";
+  const plusIcoClass = "downarrow";
+  const hideClass = "hiden";
+  const elementHeight = "--menu-element-height";
+  const elementHeightUnit = "px";
 
   if (e.target.classList.contains(btnNameClass)) {
-    //"t_" - targetet
+    //"t_" - targeted
     const t_btnArrow = e.target.parentNode.querySelector("." + btnNameClass);
     const t_Ul = e.target.parentNode.querySelector("ul");
 

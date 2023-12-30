@@ -194,176 +194,115 @@ const getElementFromCss = (cssElement) => {
   return factHeight;
 };
 
-///////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
-//refactoring in progress
-///////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
-// const BtnArrowsListenClic = (e) => {
-//   addEventListener("click", e);
-// };
+const BtnArrowsListenClic = (e) => {
+  addEventListener("click", e);
+};
 
-// btnNameClass = "btnarrow";
-// minusIcoClass = "uparrow";
-// plusIcoClass = "downarrow";
-// hideClass = "hiden";
+btnNameClass = "btnarrow";
+minusIcoClass = "uparrow";
+plusIcoClass = "downarrow";
+hideClass = "hiden";
+elementHeight = "--menu-element-height";
+elementHeightUnit = "px";
 
-// const plusElements = (e) => {
-//   //"t_" - targetet
-//   const t_btnArrow = e.target.parentNode.querySelector("." + btnNameClass);
-//   const t_Ul = e.target.parentNode.querySelector("ul");
-//   const t_AllLiInCurrentUl = t_Ul.querySelectorAll(":scope > li").length;
-//   const t_upLevelUl = e.target.closest("ul");
-//   if (e.target.classList.contains(btnNameClass)) {
-//     t_btnArrow.classList.toggle(minusIcoClass);
-//     t_btnArrow.classList.toggle(plusIcoClass);
-//     if (t_Ul.classList.contains(hideClass)) {
-//       if (!t_upLevelUl.id) {
-//         let heightPx = t_Ul.style.maxHeight;
-//         //kontrola estli tento UL nema zadanou zadanou vysku anebo zadano 0:
-//         if (heightPx != null && heightPx <= 0) {
-//           let heightLessPX = 0;
-//           t_Ul.style.maxHeight =
-//             t_AllLiInCurrentUl * getElementFromCss() + heightLessPX + "px";
-//           //pridavame vysku skutecnou
-//         }
-//       } else {
-//         //jinak jestli neco v levelu je a vic nez 0:
-//         let elementUl = t_Ul;
-//         while (!t_upLevelUl.id) {
-//           elementUl = elementUl.closest("ul");
-//           //opakovat az nedojdou levely
-//           // if (element.classList.contains("colapse")) {
-//           let heightPx = t_Ul.style.maxHeight;
-//           if (!heightPx) {
-//             //estli taked level neni cisty
-//             t_Ul.style.maxHeight =
-//               t_AllLiInCurrentUl * getElementFromCss("--menu-element-height") +
-//               "px ";
-//             let heightPx = element.style.maxHeight;
-//             let heightLessPX = heightPx.replace("px", "");
-//             elementUl.style.maxHeight =
-//               parseInt(heightLessPX) +
-//               t_AllLiInCurrentUl * getElementFromCss("--menu-element-height") +
-//               "px ";
-//           } else {
-//             //estli taked level cisty
+const plusElements = (e) => {
+  if (e.target.classList.contains(btnNameClass)) {
+    //"t_" - targetet
+    const t_btnArrow = e.target.parentNode.querySelector("." + btnNameClass);
+    const t_Ul = e.target.parentNode.querySelector("ul");
+    const t_AllLiInCurrentUl = t_Ul.querySelectorAll(":scope > li").length;
+    const t_upLevelUl = e.target.closest("ul");
 
-//             let heightPxCurent = t_Ul.style.maxHeight;
-//             let heightLessPXCurent = heightPxCurent.replace("px", "");
-//             let heightPx = element.style.maxHeight;
-//             let heightLessPX = heightPx.replace("px", "");
+    t_btnArrow.classList.toggle(minusIcoClass);
+    t_btnArrow.classList.toggle(plusIcoClass);
 
-//             elementUl.style.maxHeight =
-//               parseInt(heightLessPXCurent) + parseInt(heightLessPX) + "px ";
-//             //zase
-//           }
-//           // }
-//         }
-//       }
-//     }
-//   }
-// };
-// BtnArrowsListenClic(plusElements);
-
-onclick = function (event) {
-  if (event.target.classList.contains("btnarrow")) {
-    const targetBtnArrow = event.target.parentNode.querySelector(".btnarrow");
-    const targetUlContainer = event.target.parentNode.querySelector("ul");
-    //dulezity radek co odebira pocet radku menu pro podalsi vypocet vysky max-height pro animace
-    let sum_CountOf_AllLiInCurrentUl =
-      targetUlContainer.querySelectorAll(":scope > li").length;
-    const upLevelColapse = event.target.closest(".colapse");
-
-    //pro animaci sipky v rozklikavacim menu
-
-    targetBtnArrow.classList.toggle("uparrow");
-    targetBtnArrow.classList.toggle("downarrow");
-
-    if (targetUlContainer.classList.contains("hiden")) {
-      ///////////////////////////////////////////////////////////////
-      //-------------------      +++         -----------------------//
-      ///////////////////////////////////////////////////////////////
-
-      if (!upLevelColapse) {
-        let heightPx = targetUlContainer.style.maxHeight;
-        //kontrola estli tento level neco ma a take 0 se hodi
+    const plus = () => {
+      if (t_upLevelUl.id) {
+        let heightPx = t_Ul.style.maxHeight;
+        //kontrola estli tento UL nema zadanou zadanou vysku anebo zadano 0:
         if (heightPx != null && heightPx <= 0) {
           let heightLessPX = 0;
-          targetUlContainer.style.maxHeight =
-            sum_CountOf_AllLiInCurrentUl *
-              getElementFromCss("--menu-element-height") +
+          t_Ul.style.maxHeight =
+            t_AllLiInCurrentUl * getElementFromCss(elementHeight) +
             heightLessPX +
-            "px";
+            elementHeightUnit;
           //pridavame vysku skutecnou
         }
       } else {
-        //jinak jestli neco v levelu je:
-        let element = targetBtnArrow;
-        while (element.parentNode != dropdown) {
-          element = element.parentNode;
+        //jinak jestli neco v levelu je a vic nez 0:
+        let elementUl = t_Ul;
+        while (!elementUl.id) {
+          elementUl = elementUl.parentNode.closest("ul");
           //opakovat az nedojdou levely
-          if (element.classList.contains("colapse")) {
-            //estli level ma v sobe collapse
-            let heightPx = targetUlContainer.style.maxHeight;
-            if (!heightPx) {
-              //estli taked level neni cisty
-              targetUlContainer.style.maxHeight =
-                sum_CountOf_AllLiInCurrentUl *
-                  getElementFromCss("--menu-element-height") +
-                "px ";
-              let heightPx = element.style.maxHeight;
-              let heightLessPX = heightPx.replace("px", "");
-              element.style.maxHeight =
-                parseInt(heightLessPX) +
-                sum_CountOf_AllLiInCurrentUl *
-                  getElementFromCss("--menu-element-height") +
-                "px ";
-            } else {
-              //estli taked level cisty
+          let heightPx = t_Ul.style.maxHeight;
+          if (!heightPx) {
+            //estli taked level neni cisty
+            t_Ul.style.maxHeight =
+              t_AllLiInCurrentUl * getElementFromCss(elementHeight) +
+              elementHeightUnit;
+            let heightPx = elementUl.style.maxHeight;
+            let heightLessPX = heightPx.replace(elementHeightUnit, "");
+            elementUl.style.maxHeight =
+              parseInt(heightLessPX) +
+              t_AllLiInCurrentUl * getElementFromCss(elementHeight) +
+              elementHeightUnit +
+              " ";
+          } else {
+            //estli taked level cisty
 
-              let heightPxCurent = targetUlContainer.style.maxHeight;
-              let heightLessPXCurent = heightPxCurent.replace("px", "");
+            let heightPxCurent = t_Ul.style.maxHeight;
+            let heightLessPXCurent = heightPxCurent.replace(
+              elementHeightUnit,
+              ""
+            );
+            let heightPx = elementUl.style.maxHeight;
+            let heightLessPX = heightPx.replace(elementHeightUnit, "");
 
-              let heightPx = element.style.maxHeight;
-              let heightLessPX = heightPx.replace("px", "");
-
-              element.style.maxHeight =
-                parseInt(heightLessPXCurent) + parseInt(heightLessPX) + "px ";
-              //zase
-            }
+            elementUl.style.maxHeight =
+              parseInt(heightLessPXCurent) +
+              parseInt(heightLessPX) +
+              elementHeightUnit +
+              " ";
+            //zase
           }
         }
       }
-      ///////////////////////////////////////////////////////////////
-      //-------------------      ---         -----------------------//
-      ///////////////////////////////////////////////////////////////
-    } else {
+    };
+
+    const minus = () => {
       //kontrola estli tento level je 0
-      if (upLevelColapse == null) {
-        //tento level je 0, -");
-      } else {
+      if (!t_upLevelUl.id) {
         //jinak jestli neco v levelu je:
-        let element = targetBtnArrow;
-        while (element.parentNode != dropdown) {
-          element = element.parentNode;
+        let elementUl = t_Ul;
+        while (!elementUl.id) {
+          elementUl = elementUl.parentNode.closest("ul");
           //opakovat levely vyse az nedojdou levely
-          if (element.classList.contains("colapse")) {
-            if (element != targetUlContainer) {
-              //bereme level ktery neni tento a je vyse mu odebirame od jeho vysky tuto
-              let heightPx = element.style.maxHeight;
-              let heightPxCurent = targetUlContainer.style.maxHeight;
-              let heightLessPX = heightPx.replace("px", "");
-              let heightLessPXCurent = heightPxCurent.replace("px", "");
-              element.style.maxHeight =
-                parseInt(heightLessPX) - parseInt(heightLessPXCurent) + "px ";
-            }
-            //opakovat
+          if (elementUl != t_Ul) {
+            //bereme level ktery neni tento a je vyse mu odebirame od jeho vysky tuto
+            let heightPx = elementUl.style.maxHeight;
+            let heightPxCurent = t_Ul.style.maxHeight;
+            let heightLessPX = heightPx.replace(elementHeightUnit, "");
+            let heightLessPXCurent = heightPxCurent.replace(
+              elementHeightUnit,
+              ""
+            );
+            elementUl.style.maxHeight =
+              parseInt(heightLessPX) -
+              parseInt(heightLessPXCurent) +
+              elementHeightUnit +
+              " ";
           }
+          //opakovat
         }
       }
+    };
+
+    if (t_Ul.classList.contains(hideClass)) {
+      plus();
+    } else {
+      minus();
     }
-    //po kliku se pridava nebo odstranuje klas
-    targetUlContainer.classList.toggle("hiden");
+    t_Ul.classList.toggle(hideClass);
   }
 };
+BtnArrowsListenClic(plusElements);

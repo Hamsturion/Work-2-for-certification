@@ -6,9 +6,6 @@ formular.addEventListener("submit", (e) => {
   const countMain = document.querySelector(".countMain").value;
   const countElements = document.querySelector(".countElements").value;
   const countDeepsLevels = document.querySelector(".countDeepsLevels").value;
-  // console.log(countMain);
-  // const countMainValue = countMain.value;
-  // const countElementsFromUser = countElements.value;
   e.preventDefault();
   dropdown.replaceChildren();
   ReloadAll(countMain, dropdown, countElements, countDeepsLevels);
@@ -46,20 +43,22 @@ const Level = (countElements, countDeepsLevels) => {
     c1 = countElements;
   }
 
-  z = countDeepsLevels;
+  let c3 = countDeepsLevels;
 
   for (let i = 0; i < c1; i++) {
     let c2 = Math.ceil(Math.random() * 3); //random (vlozeni, bez vlozeni, prazdno)
 
-    if (c2 == 1 && z > 0) {
-      z--;
+    if (c2 == 1 && c3 > 0) {
+      //pocet iteraci vlozeni
+      c3--;
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
-      newFrag.appendChild(Level(countElements, z));
+      newFrag.appendChild(Level(countElements, c3));
       ul.appendChild(newFrag);
     }
     if (c2 == 2) {
+      //nebo nahodnych bez vlozeni
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
@@ -77,12 +76,7 @@ const Level = (countElements, countDeepsLevels) => {
   return newFrag.appendChild(li);
 };
 
-const GenMainPosition = (
-  countMain,
-  mainMenuParentElement,
-  countElements,
-  countDeepsLevels
-) => {
+const GenMainPosition = (countMain, mainParent, countElements, countDeeps) => {
   //Vytvoreni nahodnych poctu prazdnych MAIN a vlozenych Menu s vlozenim
   let count;
   if (!countMain) {
@@ -90,21 +84,21 @@ const GenMainPosition = (
   } else {
     count = countMain;
   }
-
-  if (!countDeepsLevels) {
-    deeep = 8; //pocet randomnich polozek v jednem Level()
+  let deep;
+  if (!countDeeps) {
+    deep = 8; //pocet randomnich polozek v jednem Level()
   } else {
-    deeep = countDeepsLevels;
+    deep = countDeeps;
   }
 
   for (let i = 1; i <= count; i++) {
-    mainMenuParentElement.appendChild(Level(countElements, deeep));
+    mainParent.appendChild(Level(countElements, deep));
   }
 };
 
-const AddColapse = (mainMenuParentElement) => {
+const AddColapse = (mainParent) => {
   //pridavani classu elementum UL jestli ne prazdny
-  const allUl = mainMenuParentElement.querySelectorAll("ul");
+  const allUl = mainParent.querySelectorAll("ul");
   let i = 0;
   allUl.forEach((findCountOfElements) => {
     let ul = allUl[i];
@@ -116,18 +110,18 @@ const AddColapse = (mainMenuParentElement) => {
   });
 };
 
-const AddForAllASpansAndArrowsInMenu = (mainMenuParentElement) => {
+const AddForAllASpansAndArrowsInMenu = (mainParent) => {
   //pridavani span do vnitr kazdeho tagu a
-  const allAFromDropdown = mainMenuParentElement.querySelectorAll("a");
+  const allAFromDropdown = mainParent.querySelectorAll("a");
   allAFromDropdown.forEach((addAInSpan) => {
     const newspan = document.createElement("span");
     addAInSpan.appendChild(newspan);
   });
 };
 
-const AddMAINsForFirstLiInMenu = (mainMenuParentElement) => {
+const AddMAINsForFirstLiInMenu = (mainParent) => {
   //dodavani nazv pro prvni elementy MAIN
-  const firstLevelAInLiElement = mainMenuParentElement.querySelectorAll(
+  const firstLevelAInLiElement = mainParent.querySelectorAll(
     ":scope > li > a > span"
   );
   let x = 1;
@@ -136,9 +130,9 @@ const AddMAINsForFirstLiInMenu = (mainMenuParentElement) => {
   });
 };
 
-const AddTagsForAllUl = (mainMenuParentElement) => {
+const AddTagsForAllUl = (mainParent) => {
   //pridavani tagu a klasu do vnitr vsech ul jestli maji potomky
-  const allUlFromMenu = mainMenuParentElement.querySelectorAll("ul");
+  const allUlFromMenu = mainParent.querySelectorAll("ul");
   allUlFromMenu.forEach((forAnyUlInMenu) => {
     if (forAnyUlInMenu.hasChildNodes()) {
       const ns = "http://www.w3.org/2000/svg";
@@ -156,9 +150,9 @@ const AddTagsForAllUl = (mainMenuParentElement) => {
   });
 };
 
-const AddMenusForAllLiInMenu = (mainMenuParentElement) => {
+const AddMenusForAllLiInMenu = (mainParent) => {
   //dodavani nazv pro vlozene elementy Menu
-  const allUlFromMenu = mainMenuParentElement.querySelectorAll("ul");
+  const allUlFromMenu = mainParent.querySelectorAll("ul");
   allUlFromMenu.forEach((forAnyLiInMenu) => {
     const allLiInUl = forAnyLiInMenu.querySelectorAll(":scope>li");
     let y = 0;

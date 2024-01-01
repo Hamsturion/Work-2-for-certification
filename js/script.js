@@ -49,24 +49,17 @@ const Level = (countElements, countDeepsLevels) => {
   z = countDeepsLevels;
 
   for (let i = 0; i < c1; i++) {
-    let c2 = Math.ceil(Math.random() * 2); //random pro prirazovani vlozeni Level()
+    let c2 = Math.ceil(Math.random() * 3); //random (vlozeni, bez vlozeni, prazdno)
 
-    if (c2 == 1) {
-      if (z > 0) {
-        z--;
-        const a = document.createElement("a");
-        const li = document.createElement("li");
-        li.appendChild(a);
-        newFrag.appendChild(Level(countElements, z));
-        ul.appendChild(newFrag);
-      } else {
-        const a = document.createElement("a");
-        const li = document.createElement("li");
-        li.appendChild(a);
-        newFrag.appendChild(li);
-        ul.appendChild(newFrag);
-      }
-    } else if (c2 == 2) {
+    if (c2 == 1 && z > 0) {
+      z--;
+      const a = document.createElement("a");
+      const li = document.createElement("li");
+      li.appendChild(a);
+      newFrag.appendChild(Level(countElements, z));
+      ul.appendChild(newFrag);
+    }
+    if (c2 == 2) {
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
@@ -99,7 +92,7 @@ const GenMainPosition = (
   }
 
   if (!countDeepsLevels) {
-    deeep = 3; //pocet randomnich polozek v jednem Level()
+    deeep = 8; //pocet randomnich polozek v jednem Level()
   } else {
     deeep = countDeepsLevels;
   }

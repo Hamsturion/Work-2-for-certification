@@ -18,7 +18,8 @@ const MenuAnimace = () => {
 
 const MenuHideOnClic = () => {
   const dropdown = document.getElementById("dropdown");
-  const svg = document.querySelector("svg");
+  const menuIcon = document.querySelector(".menu-icon");
+  const svg = menuIcon.querySelector("svg");
   if (dropdown.classList.contains("off")) {
     svg.classList.remove("active");
     dropdown.classList.remove("off");

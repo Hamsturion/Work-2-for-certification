@@ -3,11 +3,15 @@ const dropdown = document.getElementById("dropdown");
 const formular = document.querySelector("form");
 
 formular.addEventListener("submit", (e) => {
-  const countMain = document.querySelector(".countMain");
-  let countFromUser = countMain.value;
+  const countMain = document.querySelector(".countMain").value;
+  const countElements = document.querySelector(".countElements").value;
+  const countDeepsLevels = document.querySelector(".countDeepsLevels").value;
+  // console.log(countMain);
+  // const countMainValue = countMain.value;
+  // const countElementsFromUser = countElements.value;
   e.preventDefault();
   dropdown.replaceChildren();
-  ReloadAll(countFromUser, dropdown);
+  ReloadAll(countMain, dropdown, countElements, countDeepsLevels);
 });
 
 const LoadAll = (a, b) => {
@@ -19,8 +23,8 @@ const LoadAll = (a, b) => {
   AddMenusForAllLiInMenu(b);
 };
 
-const ReloadAll = (a, b) => {
-  GenMainPosition(a, b);
+const ReloadAll = (a, b, c, d) => {
+  GenMainPosition(a, b, c, d);
   AddColapse(b);
   AddForAllASpansAndArrowsInMenu(b);
   AddMAINsForFirstLiInMenu(b);
@@ -28,27 +32,41 @@ const ReloadAll = (a, b) => {
   AddMenusForAllLiInMenu(b);
 };
 
-const Level = () => {
+const Level = (countElements, countDeepsLevels) => {
   //Generace menu s naslednym nahodnym vlozenim do sebe
   let newFrag = document.createDocumentFragment();
   const a = document.createElement("a");
   const li = document.createElement("li");
   const ul = document.createElement("ul");
+  let c1;
 
-  let c1 = Math.ceil(Math.random() * 2); //2 opakovani, jestli bude 3 a vic nasobne se zvetsuji sansi opakovani (20k iteraci a vic)
-  for (let i = 0; i <= c1; i++) {
-    let c2 = Math.ceil(Math.random() * 4); //if c2 = (3 or 4) MAIN without levels
+  if (!countElements) {
+    c1 = Math.ceil(Math.random() * 5); //pocet randomnich polozek v jednem Level()
+  } else {
+    c1 = countElements;
+  }
+
+  z = countDeepsLevels;
+
+  for (let i = 0; i < c1; i++) {
+    let c2 = Math.ceil(Math.random() * 2); //random pro prirazovani vlozeni Level()
 
     if (c2 == 1) {
-      //vlozeni samo do sebe
-      const a = document.createElement("a");
-      const li = document.createElement("li");
-      li.appendChild(a);
-      newFrag.appendChild(li);
-      newFrag.appendChild(Level());
-      ul.appendChild(newFrag);
+      if (z > 0) {
+        z--;
+        const a = document.createElement("a");
+        const li = document.createElement("li");
+        li.appendChild(a);
+        newFrag.appendChild(Level(countElements, z));
+        ul.appendChild(newFrag);
+      } else {
+        const a = document.createElement("a");
+        const li = document.createElement("li");
+        li.appendChild(a);
+        newFrag.appendChild(li);
+        ul.appendChild(newFrag);
+      }
     } else if (c2 == 2) {
-      //bez vlozeni
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
@@ -63,21 +81,31 @@ const Level = () => {
     li.appendChild(ul);
   }
 
-  newFrag.appendChild(li);
-  return newFrag;
+  return newFrag.appendChild(li);
 };
 
-const GenMainPosition = (countFromUser, mainMenuParentElement) => {
+const GenMainPosition = (
+  countMain,
+  mainMenuParentElement,
+  countElements,
+  countDeepsLevels
+) => {
   //Vytvoreni nahodnych poctu prazdnych MAIN a vlozenych Menu s vlozenim
   let count;
-  if (!countFromUser) {
+  if (!countMain) {
     count = Math.ceil(Math.random() * 4 + 5);
   } else {
-    count = countFromUser;
+    count = countMain;
+  }
+
+  if (!countDeepsLevels) {
+    deeep = 3; //pocet randomnich polozek v jednem Level()
+  } else {
+    deeep = countDeepsLevels;
   }
 
   for (let i = 1; i <= count; i++) {
-    mainMenuParentElement.appendChild(Level());
+    mainMenuParentElement.appendChild(Level(countElements, deeep));
   }
 };
 

@@ -8,28 +8,28 @@ formular.addEventListener("submit", (e) => {
   const countDeepsLevels = document.querySelector(".countDeepsLevels").value;
   e.preventDefault();
   dropdown.replaceChildren();
-  ReloadAll(countMain, dropdown, countElements, countDeepsLevels);
+  reloadAll(countMain, dropdown, countElements, countDeepsLevels);
 });
 
-const LoadAll = (a, b) => {
-  GenMainPosition(a, b);
-  AddColapse(b);
-  AddForAllASpansAndArrowsInMenu(b);
-  AddMAINsForFirstLiInMenu(b);
-  AddTagsForAllUl(b);
-  AddMenusForAllLiInMenu(b);
+const loadAll = (a, b) => {
+  genMainPosition(a, b);
+  addColapse(b);
+  addForAllASpansAndArrowsInMenu(b);
+  addMAINsForFirstLiInMenu(b);
+  addTagsForAllUl(b);
+  addMenusForAllLiInMenu(b);
 };
 
-const ReloadAll = (a, b, c, d) => {
-  GenMainPosition(a, b, c, d);
-  AddColapse(b);
-  AddForAllASpansAndArrowsInMenu(b);
-  AddMAINsForFirstLiInMenu(b);
-  AddTagsForAllUl(b);
-  AddMenusForAllLiInMenu(b);
+const reloadAll = (a, b, c, d) => {
+  genMainPosition(a, b, c, d);
+  addColapse(b);
+  addForAllASpansAndArrowsInMenu(b);
+  addMAINsForFirstLiInMenu(b);
+  addTagsForAllUl(b);
+  addMenusForAllLiInMenu(b);
 };
 
-const Level = (countElements, countDeepsLevels) => {
+const level = (countElements, countDeepsLevels) => {
   //Generace menu s naslednym nahodnym vlozenim do sebe
   let newFrag = document.createDocumentFragment();
   const a = document.createElement("a");
@@ -54,7 +54,7 @@ const Level = (countElements, countDeepsLevels) => {
       const a = document.createElement("a");
       const li = document.createElement("li");
       li.appendChild(a);
-      newFrag.appendChild(Level(countElements, c3));
+      newFrag.appendChild(level(countElements, c3));
       ul.appendChild(newFrag);
     }
     if (c2 == 2) {
@@ -76,7 +76,7 @@ const Level = (countElements, countDeepsLevels) => {
   return newFrag.appendChild(li);
 };
 
-const GenMainPosition = (countMain, mainParent, countElements, countDeeps) => {
+const genMainPosition = (countMain, mainParent, countElements, countDeeps) => {
   //Vytvoreni nahodnych poctu prazdnych MAIN a vlozenych Menu s vlozenim
   let count;
   if (!countMain) {
@@ -92,11 +92,11 @@ const GenMainPosition = (countMain, mainParent, countElements, countDeeps) => {
   }
 
   for (let i = 1; i <= count; i++) {
-    mainParent.appendChild(Level(countElements, deep));
+    mainParent.appendChild(level(countElements, deep));
   }
 };
 
-const AddColapse = (mainParent) => {
+const addColapse = (mainParent) => {
   //pridavani classu elementum UL jestli ne prazdny
   const allUl = mainParent.querySelectorAll("ul");
   let i = 0;
@@ -110,7 +110,7 @@ const AddColapse = (mainParent) => {
   });
 };
 
-const AddForAllASpansAndArrowsInMenu = (mainParent) => {
+const addForAllASpansAndArrowsInMenu = (mainParent) => {
   //pridavani span do vnitr kazdeho tagu a
   const allAFromDropdown = mainParent.querySelectorAll("a");
   allAFromDropdown.forEach((addAInSpan) => {
@@ -119,7 +119,7 @@ const AddForAllASpansAndArrowsInMenu = (mainParent) => {
   });
 };
 
-const AddMAINsForFirstLiInMenu = (mainParent) => {
+const addMAINsForFirstLiInMenu = (mainParent) => {
   //dodavani nazv pro prvni elementy MAIN
   const firstLevelAInLiElement = mainParent.querySelectorAll(
     ":scope > li > a > span"
@@ -130,7 +130,7 @@ const AddMAINsForFirstLiInMenu = (mainParent) => {
   });
 };
 
-const AddTagsForAllUl = (mainParent) => {
+const addTagsForAllUl = (mainParent) => {
   //pridavani tagu a klasu do vnitr vsech ul jestli maji potomky
   const allUlFromMenu = mainParent.querySelectorAll("ul");
   allUlFromMenu.forEach((forAnyUlInMenu) => {
@@ -150,7 +150,7 @@ const AddTagsForAllUl = (mainParent) => {
   });
 };
 
-const AddMenusForAllLiInMenu = (mainParent) => {
+const addMenusForAllLiInMenu = (mainParent) => {
   //dodavani nazv pro vlozene elementy Menu
   const allUlFromMenu = mainParent.querySelectorAll("ul");
   allUlFromMenu.forEach((forAnyLiInMenu) => {
@@ -164,7 +164,7 @@ const AddMenusForAllLiInMenu = (mainParent) => {
   });
 };
 
-const ElemInCss = (cssElement) => {
+const elemInCss = (cssElement) => {
   //odeber z css var vysky jednotlive polozky menu
   const factHeightSorce = getComputedStyle(document.documentElement)
     .getPropertyValue(cssElement)
@@ -173,7 +173,7 @@ const ElemInCss = (cssElement) => {
   return factHeight;
 };
 
-const Plus = (ul, eh, eu) => {
+const plus = (ul, eh, eu) => {
   //pridavani vysky elementum
 
   //ul - element "UL"
@@ -188,7 +188,7 @@ const Plus = (ul, eh, eu) => {
     if (h_Eu != null && h_Eu <= 0) {
       //pridavame vysku skutecnou
       let h_NoEu = 0;
-      ul.style.maxHeight = lic * ElemInCss(eh) + h_NoEu + eu;
+      ul.style.maxHeight = lic * elemInCss(eh) + h_NoEu + eu;
     }
   } else {
     //jinak jestli neco v levelu je a vic nez 0:
@@ -201,8 +201,8 @@ const Plus = (ul, eh, eu) => {
         //estli taked level neni cisty
         let h_Eu = eUl.style.maxHeight;
         let h_NoEu = h_Eu.replace(eu, "");
-        ul.style.maxHeight = lic * ElemInCss(eh) + eu;
-        eUl.style.maxHeight = parseInt(h_NoEu) + lic * ElemInCss(eh) + eu + " ";
+        ul.style.maxHeight = lic * elemInCss(eh) + eu;
+        eUl.style.maxHeight = parseInt(h_NoEu) + lic * elemInCss(eh) + eu + " ";
       } else {
         //estli taked level cisty
         let h_EuC = ul.style.maxHeight;
@@ -216,7 +216,7 @@ const Plus = (ul, eh, eu) => {
   }
 };
 
-const Minus = (ul, eu) => {
+const minus = (ul, eu) => {
   //odebirani vysky elementum
 
   //ul - element "UL"
@@ -242,11 +242,11 @@ const Minus = (ul, eu) => {
   }
 };
 
-const BtnArrowsListenClic = (e) => {
+const btnArrowsListenClic = (e) => {
   addEventListener("click", e);
 };
 
-const PlusMinusElements = (e) => {
+const plusMinusElements = (e) => {
   //spracovani Plus() a Minus() s pridavanim klasu
   const btnNameClass = "btnarrow";
   const minusIcoClass = "uparrow";
@@ -261,15 +261,15 @@ const PlusMinusElements = (e) => {
     const t_Ul = e.target.parentNode.querySelector("ul");
 
     if (t_btnArrow.classList.contains(plusIcoClass)) {
-      Plus(t_Ul, elementHeight, elementHeightUnit);
+      plus(t_Ul, elementHeight, elementHeightUnit);
     } else {
-      Minus(t_Ul, elementHeightUnit);
+      minus(t_Ul, elementHeightUnit);
     }
     t_btnArrow.classList.toggle(minusIcoClass);
     t_btnArrow.classList.toggle(plusIcoClass);
     t_Ul.classList.toggle(hideClass);
   }
 };
-BtnArrowsListenClic(PlusMinusElements);
+btnArrowsListenClic(plusMinusElements);
 
-LoadAll(0, dropdown);
+loadAll(0, dropdown);

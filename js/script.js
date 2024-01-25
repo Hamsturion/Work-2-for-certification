@@ -1,33 +1,33 @@
 /////////////////////////////////////////////////////////////////////////////////
 const dropdown = document.getElementById("dropdown");
-const formular = document.querySelector("form");
 
-formular.addEventListener("submit", (e) => {
-  const countMain = document.querySelector(".countMain").value;
-  const countElements = document.querySelector(".countElements").value;
-  const countDeepsLevels = document.querySelector(".countDeepsLevels").value;
-  e.preventDefault();
-  dropdown.replaceChildren();
-  reloadAll(countMain, dropdown, countElements, countDeepsLevels);
-});
+// const formular = document.querySelector("form");
+// formular.addEventListener("submit", (e) => {
+//   const countMain = document.querySelector(".countMain").value;
+//   const countElements = document.querySelector(".countElements").value;
+//   const countDeepsLevels = document.querySelector(".countDeepsLevels").value;
+//   e.preventDefault();
+//   dropdown.replaceChildren();
+//   reloadAll(countMain, dropdown, countElements, countDeepsLevels);
+// });
 
-const loadAll = (a, b) => {
-  genMainPosition(a, b);
-  addColapse(b);
-  addForAllASpansAndArrowsInMenu(b);
-  addMAINsForFirstLiInMenu(b);
-  addTagsForAllUl(b);
-  addMenusForAllLiInMenu(b);
+const loadAll = (countMain, mainParent) => {
+  genMainPosition(countMain, mainParent);
+  addColapse(mainParent);
+  addForAllASpansAndArrowsInMenu(mainParent);
+  addMAINsForFirstLiInMenu(mainParent);
+  addTagsForAllUl(mainParent);
+  addMenusForAllLiInMenu(mainParent);
 };
 
-const reloadAll = (a, b, c, d) => {
-  genMainPosition(a, b, c, d);
-  addColapse(b);
-  addForAllASpansAndArrowsInMenu(b);
-  addMAINsForFirstLiInMenu(b);
-  addTagsForAllUl(b);
-  addMenusForAllLiInMenu(b);
-};
+// const reloadAll = (a, b, c, d) => {
+//   genMainPosition(a, b, c, d);
+//   addColapse(b);
+//   addForAllASpansAndArrowsInMenu(b);
+//   addMAINsForFirstLiInMenu(b);
+//   addTagsForAllUl(b);
+//   addMenusForAllLiInMenu(b);
+// };
 
 const level = (countElements, countDeepsLevels) => {
   //Generace menu s naslednym nahodnym vlozenim do sebe
@@ -242,11 +242,7 @@ const minus = (ul, eu) => {
   }
 };
 
-const btnArrowsListenClic = (e) => {
-  addEventListener("click", e);
-};
-
-const plusMinusElements = (e) => {
+const plusMinusElements = (dropdown) => {
   //spracovani Plus() a Minus() s pridavanim klasu
   const btnNameClass = "btnarrow";
   const minusIcoClass = "uparrow";
@@ -255,7 +251,7 @@ const plusMinusElements = (e) => {
   const elementHeight = "--menu-element-height";
   const elementHeightUnit = "px";
 
-  if (e.target.classList.contains(btnNameClass)) {
+  const execution = (e) => {
     //"t_" - targeted
     const t_btnArrow = e.target.parentNode.querySelector("." + btnNameClass);
     const t_Ul = e.target.parentNode.querySelector("ul");
@@ -268,8 +264,15 @@ const plusMinusElements = (e) => {
     t_btnArrow.classList.toggle(minusIcoClass);
     t_btnArrow.classList.toggle(plusIcoClass);
     t_Ul.classList.toggle(hideClass);
-  }
+  };
+
+  dropdown.addEventListener("click", (e) => {
+    if (e.target.classList.contains(btnNameClass)) {
+      execution(e);
+    }
+  });
 };
-btnArrowsListenClic(plusMinusElements);
 
 loadAll(0, dropdown);
+
+plusMinusElements(dropdown);
